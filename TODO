@@ -1,3 +1,10 @@
+porton, Runtime.exec(), ProcessBuilder, etc are tricky beasts. The rules: 1: Always use ProcessBuilder. 2: Consider using http://github.com/johnlcox/process-warden as it works around most trickery and pitfalls. 3: exec() and co directly start processes, it's not like the command line. No processing is done on your parameters. 4: You need to empty both standard out and standard err, or use pb.redirectErrorStream, or the process will eventually hang.
+<dreamreal> but you're doing it in a really roundabout manner
+<dreamreal> ~zt-exec
+<javabot> zt-exec is a nicer wrapper about Process and ProcessBuilder by the zeroturnaround engineers.  https://github.com/zeroturnaround/zt-exec
+
+~no process is  Runtime.exec(), ProcessBuilder, etc are tricky beasts. The rules: 1: Always use ProcessBuilder. 2: Consider using http://github.com/johnlcox/process-warden or ~zt-exec as they work around most trickery and pitfalls. 3: exec() and co directly start processes, it's not like the command line. No processing is done on your parameters. 4: You need to empty both standard out and standard err, or use pb.redirectErrorStream, or the process will
+
 * How to "import" in Python through the network:
   https://docs.python.org/3/reference/import.html#replacing-the-standard-import-system
 
