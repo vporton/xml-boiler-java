@@ -1,4 +1,5 @@
 Th ONLY way to deal well asyncronously is write our own ProcessBuilder analog.
+Hm, but what to do with waitFor()?
 
 When using a separate thread to .waitFor() and something like
 java.nio.channels.Selector with a pair of pipes to inform the main thread
