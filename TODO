@@ -1,3 +1,6 @@
+On using ProcessBuilder:
+https://www.javaworld.com/article/2074830/core-java/the-pain-of-broken-subprocess-management-on-jdk.html
+
 porton, Runtime.exec(), ProcessBuilder, etc are tricky beasts. The rules: 1: Always use ProcessBuilder. 2: Consider using http://github.com/johnlcox/process-warden as it works around most trickery and pitfalls. 3: exec() and co directly start processes, it's not like the command line. No processing is done on your parameters. 4: You need to empty both standard out and standard err, or use pb.redirectErrorStream, or the process will eventually hang.
 <dreamreal> but you're doing it in a really roundabout manner
 <dreamreal> ~zt-exec
