@@ -1,3 +1,5 @@
+Maven or Graddle for building.
+
 Ignore the below. We may just start three threads to watch for:
 stdin, stdout, waitFor(). Not an efficient solution but simple and portable.
 
