@@ -1,4 +1,7 @@
-Th ONLY way to deal well asyncronously is write our own ProcessBuilder analog.
+Ignore the below. We may just start three threads to watch for:
+stdin, stdout, waitFor(). Not an efficient solution but simple and portable.
+
+The ONLY way to deal well asyncronously is write our own ProcessBuilder analog.
 Hm, but what to do with waitFor()?
 
 When using a separate thread to .waitFor() and something like
