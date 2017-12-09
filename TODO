@@ -3,6 +3,7 @@ java.nio.channels.Selector with a pair of pipes to inform the main thread
 about process exit. When using Selector, we will check if data is available
 on stdin/stdout even if we received a character from our pipe, to be sure
 and exit from the loop only after last "flush" of the in/out pipes.
+Also use `timeout` arg of select().
 
 On using ProcessBuilder:
 https://www.javaworld.com/article/2074830/core-java/the-pain-of-broken-subprocess-management-on-jdk.html
