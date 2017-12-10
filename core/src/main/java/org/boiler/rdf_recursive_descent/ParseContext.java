@@ -34,7 +34,7 @@ public class ParseContext {
     private java.util.ResourceBundle messages;
     
     public ParseContext() {
-        this(new Locale("en", "US"));
+        this(Locale.getDefault());
     }
     
     public ParseContext(java.util.Locale locale) {
