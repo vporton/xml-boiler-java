@@ -21,7 +21,6 @@ package org.boiler.rdf_recursive_descent.compound;
 
 import java.util.List;
 import java.util.ArrayList;
-import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.NodeIterator;
 import org.apache.jena.rdf.model.Resource;
 import org.boiler.rdf_recursive_descent.*;
