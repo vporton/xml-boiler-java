@@ -62,7 +62,7 @@ public class OnePredicate<T> extends PredicateParser<T> {
         if(list.size() != 1) {
             org.boiler.util.StringCreator msg =
                 () -> java.text.MessageFormat.format(
-                        context.getMessages().getString("OnePredicate_error"),
+                        context.getLocalized("OnePredicate_error"),
                         getPredicate(), node);
             return context.raise(getErrorHandler(), msg);
         }

@@ -53,6 +53,10 @@ public class ParseContext {
         return messages;
     }
     
+    public String getLocalized(String str) {
+        return messages.getString(str);
+    }
+    
     public <T> ParseResult<? extends T>
         raise(ErrorHandler handler, org.boiler.util.StringCreator str)
                 throws FatalParseError {
