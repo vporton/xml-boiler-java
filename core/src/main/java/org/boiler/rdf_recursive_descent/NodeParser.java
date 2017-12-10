@@ -23,25 +23,16 @@ package org.boiler.rdf_recursive_descent;
  *
  * @author Victor Porton
  */
-public abstract class PredicateParser<T> {
-    
-    private final org.apache.jena.rdf.model.Property predicate;
+public abstract class NodeParser<T> {
     
     private final ErrorHandler onError; // TODO: Maybe move onError field into concrete derived types? (because it is not used everywhere)
 
-    public PredicateParser(org.apache.jena.rdf.model.Property predicate) {
-        this.predicate = predicate;
+    public NodeParser() {
         this.onError = ErrorHandler.IGNORE;
     }
     
-    public PredicateParser(org.apache.jena.rdf.model.Property predicate,
-                           ErrorHandler onError) {
-        this.predicate = predicate;
+    public NodeParser(ErrorHandler onError) {
         this.onError = onError;
-    }
-    
-    public final org.apache.jena.rdf.model.Property getPredicate() {
-        return predicate;
     }
     
     public final ErrorHandler getErrorHandler() {

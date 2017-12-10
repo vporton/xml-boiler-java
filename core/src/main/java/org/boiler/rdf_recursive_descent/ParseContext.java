@@ -24,7 +24,8 @@ package org.boiler.rdf_recursive_descent;
  * @author Victor Porton
  */
 public class ParseContext {
-    <T>ParseResult raise(ErrorHandler handler, String message) throws FatalParseError {
+
+    <T> ParseResult<T> raise(ErrorHandler handler, String message) throws FatalParseError {
         switch(handler) {
             case IGNORE:
                 return new ParseResult();
@@ -36,4 +37,5 @@ public class ParseContext {
                 throw new FatalParseError(message);
         }
     }
+
 }
