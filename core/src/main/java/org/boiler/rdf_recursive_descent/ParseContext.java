@@ -29,6 +29,8 @@ public class ParseContext {
     
     private java.util.logging.Logger logger;
     
+    private java.util.ResourceBundle messages; // TODO: Setting it
+    
     public java.util.logging.Logger getLogger() {
         return logger;
     }
@@ -37,6 +39,10 @@ public class ParseContext {
         this.logger = logger;
     }
 
+    public java.util.ResourceBundle getMessages() {
+        return messages;
+    }
+    
     public <T> ParseResult<T> raise(ErrorHandler handler, org.boiler.util.StringCreator str)
             throws FatalParseError {
         switch(handler) {

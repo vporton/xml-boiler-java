@@ -50,6 +50,7 @@ public abstract class PredicateParser<T> {
     
     public abstract ParseResult<T> parse(ParseContext context,
                                          org.apache.jena.rdf.model.Model model,
-                                         org.apache.jena.rdf.model.Resource node);
-    
+                                         org.apache.jena.rdf.model.Resource node)
+                throws FatalParseError;
+
 }
