@@ -30,18 +30,18 @@ import org.boiler.rdf_recursive_descent.*;
  *
  * @author Victor Porton
  */
-public class OneOrMorePredicate<T> extends PredicateParser<List<T>> {
+public class ZeroOrMorePredicate<T> extends PredicateParser<List<T>> {
     
     private final NodeParser<T> child;
     
-    public OneOrMorePredicate(org.apache.jena.rdf.model.Property predicate,
+    public ZeroOrMorePredicate(org.apache.jena.rdf.model.Property predicate,
                               NodeParser<T> child)
     {
         super(predicate);
         this.child = child;
     }
     
-    public OneOrMorePredicate(org.apache.jena.rdf.model.Property predicate,
+    public ZeroOrMorePredicate(org.apache.jena.rdf.model.Property predicate,
                               NodeParser<T> child,
                               ErrorHandler onError)
     {
