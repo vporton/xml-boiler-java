@@ -19,6 +19,7 @@
  */
 package org.boiler.rdf_recursive_descent.compound;
 
+import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.NodeIterator;
 import org.boiler.rdf_recursive_descent.*;
 
@@ -48,6 +49,11 @@ public class OnePredicate<T> extends PredicateParser<T> {
                                 org.apache.jena.rdf.model.Resource node)
     {
         final NodeIterator iter = model.listObjectsOfProperty(node, getPredicate());
+        // Not very efficient if iter.toList() > 1, but this does not happen usually
+        java.util.List<RDFNode> list = iter.toList();
+        if(list.size() != 1) {
+            // TODO
+        }
         // TODO
         return null; // FIXME
     };
