@@ -48,11 +48,11 @@ public class ParseContext {
                 throws FatalParseError {
         switch(handler) {
             case IGNORE:
-                return new ParseResult();
+                return new ParseResult<T>();
             case WARNING:
                 if(logger != null)
                     logger.log(Level.WARNING, str.create());
-                return new ParseResult();
+                return new ParseResult<T>();
             case FATAL:
                 final String message = str.create();
                 if(logger != null)
@@ -63,7 +63,8 @@ public class ParseContext {
     }
 
     public <T> ParseResult<? extends T> raise(ErrorHandler handler, String message)
-            throws FatalParseError {
+            throws FatalParseError
+    {
         return raise(handler, ()->message);
     }
     
