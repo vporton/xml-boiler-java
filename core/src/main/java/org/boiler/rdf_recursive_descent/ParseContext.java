@@ -37,6 +37,7 @@ public class ParseContext {
                 // TODO: Log message
                 throw new FatalParseError(message);
         }
+        return null; // avoid "missing return statement" warning
     }
 
 }
