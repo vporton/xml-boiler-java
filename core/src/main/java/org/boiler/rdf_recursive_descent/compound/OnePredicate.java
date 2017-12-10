@@ -33,14 +33,16 @@ public class OnePredicate<T> extends PredicateParser<T> {
     private final NodeParser<T> child;
     
     public OnePredicate(org.apache.jena.rdf.model.Property predicate,
-                        NodeParser<T> child) {
+                        NodeParser<T> child) 
+    {
         super(predicate);
         this.child = child;
     }
     
     public OnePredicate(org.apache.jena.rdf.model.Property predicate,
                         NodeParser<T> child,
-                        ErrorHandler onError) {
+                        ErrorHandler onError) 
+    {
         super(predicate, onError);
         this.child = child;
     }
