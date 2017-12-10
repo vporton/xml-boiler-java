@@ -19,6 +19,7 @@
  */
 package org.boiler.rdf_recursive_descent.compound;
 
+import org.apache.jena.rdf.model.NodeIterator;
 import org.boiler.rdf_recursive_descent.*;
 
 /**
@@ -42,11 +43,13 @@ public class OnePredicate<T> extends PredicateParser<T> {
         this.child = child;
     }
     
-    public ParseResult<T> parse(ParseContext context, 
-                                org.apache.jena.rdf.model.Model model,
-                                org.apache.jena.graph.Node node)
+    public ParseResult<T> parse(ParseContext context,
+                                org.apache.jena.rdf.model.Model model, 
+                                org.apache.jena.rdf.model.Resource node)
     {
+        final NodeIterator iter = model.listObjectsOfProperty(node, getPredicate());
         // TODO
-    }
+        return null; // FIXME
+    };
     
 }

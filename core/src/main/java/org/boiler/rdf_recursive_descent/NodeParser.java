@@ -44,6 +44,6 @@ public abstract class NodeParser<T> {
     
     public abstract ParseResult<T> parse(ParseContext context, 
                                          org.apache.jena.rdf.model.Model model,
-                                         org.apache.jena.graph.Node node);
+                                         org.apache.jena.rdf.model.Resource node);
     
 }
