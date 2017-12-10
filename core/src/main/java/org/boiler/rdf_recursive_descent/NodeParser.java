@@ -19,6 +19,9 @@
  */
 package org.boiler.rdf_recursive_descent;
 
+// WARNING: Don't use this parser to parse recursive data structures,
+// because it may lead to infinite recursion on circular RDF.
+
 /**
  *
  * @author Victor Porton
