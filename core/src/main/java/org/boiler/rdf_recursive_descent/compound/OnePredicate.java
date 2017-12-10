@@ -60,12 +60,10 @@ public class OnePredicate<T> extends PredicateParser<T> {
         // Not very efficient if iter.toList() > 1, but this does not happen usually:
         java.util.List<RDFNode> list = iter.toList();
         if(list.size() != 1) {
-            final org.apache.jena.rdf.model.Resource node2 = node;
-            final org.apache.jena.rdf.model.Resource predicate2 = getPredicate();
             org.boiler.util.StringCreator msg =
                 () -> java.text.MessageFormat.format(
                         context.getMessages().getString("OnePredicate_error"),
-                        predicate2, node2);
+                        getPredicate(), node);
             return context.raise(getErrorHandler(), msg);
         }
         return child.parse(context, model, (Resource)list.get(0));
