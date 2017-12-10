@@ -25,6 +25,7 @@ package org.boiler.rdf_recursive_descent;
  */
 public class ParseContext {
 
+    // TODO: pass a callback with error to save its formatting
     <T> ParseResult<T> raise(ErrorHandler handler, String message) throws FatalParseError {
         switch(handler) {
             case IGNORE:
