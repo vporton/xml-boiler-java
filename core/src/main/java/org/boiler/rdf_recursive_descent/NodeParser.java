@@ -42,7 +42,7 @@ public abstract class NodeParser<T> {
         return onError;
     }
     
-    public abstract ParseResult<T> parse(ParseContext context, 
+    public abstract ParseResult<? extends T> parse(ParseContext context, 
                                          org.apache.jena.rdf.model.Model model,
                                          org.apache.jena.rdf.model.Resource node)
             throws FatalParseError;

@@ -50,7 +50,7 @@ public class OnePredicate<T> extends PredicateParser<T> {
     }
     
     @Override
-    public ParseResult<T> parse(ParseContext context,
+    public ParseResult<? extends T> parse(ParseContext context,
                                 org.apache.jena.rdf.model.Model model, 
                                 org.apache.jena.rdf.model.Resource node)
             throws FatalParseError

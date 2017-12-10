@@ -43,7 +43,7 @@ public class ParseContext {
         return messages;
     }
     
-    public <T> ParseResult<T> raise(ErrorHandler handler, org.boiler.util.StringCreator str)
+    public <T> ParseResult<? extends T> raise(ErrorHandler handler, org.boiler.util.StringCreator str)
             throws FatalParseError {
         switch(handler) {
             case IGNORE:
@@ -61,7 +61,7 @@ public class ParseContext {
         return null; // avoid "missing return statement" warning
     }
 
-    public <T> ParseResult<T> raise(ErrorHandler handler, String message)
+    public <T> ParseResult<? extends T> raise(ErrorHandler handler, String message)
             throws FatalParseError {
         return raise(handler, ()->message);
     }
