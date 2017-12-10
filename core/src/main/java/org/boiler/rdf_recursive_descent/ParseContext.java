@@ -57,7 +57,7 @@ public class ParseContext {
         return messages.getString(str);
     }
     
-    public <T> ParseResult<? extends T>
+    public <T> ParseResult<T>
         raise(ErrorHandler handler, org.boiler.util.StringCreator str)
                 throws FatalParseError {
         switch(handler) {
@@ -76,7 +76,7 @@ public class ParseContext {
         return null; // avoid "missing return statement" warning
     }
 
-    public <T> ParseResult<? extends T> raise(ErrorHandler handler, String message)
+    public <T> ParseResult<T> raise(ErrorHandler handler, String message)
             throws FatalParseError
     {
         return raise(handler, ()->message);
