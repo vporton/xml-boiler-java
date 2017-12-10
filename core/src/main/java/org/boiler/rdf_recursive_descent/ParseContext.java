@@ -19,7 +19,8 @@
  */
 package org.boiler.rdf_recursive_descent;
 
-import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.Locale;
 
 /**
  *
@@ -29,7 +30,15 @@ public class ParseContext {
     
     private java.util.logging.Logger logger;
     
-    private java.util.ResourceBundle messages; // TODO: Setting it
+    private java.util.ResourceBundle messages;
+    
+    public ParseContext() {
+        this(new Locale("en", "US"));
+    }
+    
+    public ParseContext(java.util.Locale locale) {
+        messages = java.util.ResourceBundle.getBundle("Messages", locale);
+    }
     
     public java.util.logging.Logger getLogger() {
         return logger;
