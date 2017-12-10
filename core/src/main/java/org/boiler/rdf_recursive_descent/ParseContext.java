@@ -43,8 +43,9 @@ public class ParseContext {
         return messages;
     }
     
-    public <T> ParseResult<? extends T> raise(ErrorHandler handler, org.boiler.util.StringCreator str)
-            throws FatalParseError {
+    public <T> ParseResult<? extends T>
+        raise(ErrorHandler handler, org.boiler.util.StringCreator str)
+                throws FatalParseError {
         switch(handler) {
             case IGNORE:
                 return new ParseResult();

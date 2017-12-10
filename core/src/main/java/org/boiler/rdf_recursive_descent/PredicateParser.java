@@ -48,9 +48,10 @@ public abstract class PredicateParser<T> {
         return onError;
     }
     
-    public abstract ParseResult<? extends T> parse(ParseContext context,
-                                         org.apache.jena.rdf.model.Model model,
-                                         org.apache.jena.rdf.model.Resource node)
+    public abstract ParseResult<? extends T>
+        parse(ParseContext context,
+              org.apache.jena.rdf.model.Model model,
+              org.apache.jena.rdf.model.Resource node)
                 throws FatalParseError;
 
 }
