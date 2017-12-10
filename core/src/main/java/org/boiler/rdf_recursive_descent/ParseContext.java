@@ -19,25 +19,44 @@
  */
 package org.boiler.rdf_recursive_descent;
 
+import java.util.logging.Level;
+
 /**
  *
  * @author Victor Porton
  */
 public class ParseContext {
+    
+    private java.util.logging.Logger logger;
+    
+    public java.util.logging.Logger getLogger() {
+        return logger;
+    }
 
-    // TODO: pass a callback with error to save its formatting
-    <T> ParseResult<T> raise(ErrorHandler handler, String message) throws FatalParseError {
+    public void setLogger(java.util.logging.Logger logger) {
+        this.logger = logger;
+    }
+
+    <T> ParseResult<T> raise(ErrorHandler handler, org.boiler.util.StringCreator str)
+            throws FatalParseError {
         switch(handler) {
             case IGNORE:
                 return new ParseResult();
             case WARNING:
-                // TODO: Log message
+                if(logger != null)
+                    logger.log(Level.WARNING, str.create());
                 return new ParseResult();
             case FATAL:
-                // TODO: Log message
+                final String message = str.create();
+                if(logger != null)
+                    logger.log(Level.SEVERE, message);
                 throw new FatalParseError(message);
         }
         return null; // avoid "missing return statement" warning
     }
 
+    <T> ParseResult<T> raise(ErrorHandler handler, String message) throws FatalParseError {
+        return raise(handler, ()->message);
+    }
+    
 }
