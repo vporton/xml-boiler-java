@@ -36,7 +36,6 @@ public class ZeroOnePredicate<T> extends PredicateParser<T> {
 
     private final NodeParser<T> child;
 
-    // NOTE: There is also TODO other class for more general default value
     private final T defaultValue;
 
     public ZeroOnePredicate(org.apache.jena.rdf.model.Property predicate,
