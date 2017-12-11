@@ -19,8 +19,8 @@
  */
 package org.boiler.graph;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.HashSet;
+import java.util.HashMap;
 
 /**
  * Directed graph. Used to check connectivity between two vertices.
@@ -29,11 +29,11 @@ import java.util.LinkedList;
  */
 public class Graph<T> {
     
-    // Why do we use two different generic types?
-    ArrayList<LinkedList<T>> adj; // FIXME: use Set
+    // In fact we have no duplicating entries. So we could use a faster type
+    HashMap<T, HashSet<T>> adj;
     
     public Graph() {
-        adj = new ArrayList<LinkedList<T>>();
+        //adj = new ArrayList<LinkedList<T>>();
     }
     
     // TODO
