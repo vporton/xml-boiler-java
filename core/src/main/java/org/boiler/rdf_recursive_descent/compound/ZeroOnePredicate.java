@@ -25,45 +25,80 @@ import org.apache.jena.rdf.model.Resource;
 import org.boiler.rdf_recursive_descent.*;
 
 /**
+ * This class implements a special case of defaultValue
+ * (only for the case of max one predicate).
+ * I do not implement more general case (in another class)
+ * because I not found concrete uses for it.
  *
  * @author Victor Porton
  */
 public class ZeroOnePredicate<T> extends PredicateParser<T> {
-    
+
     private final NodeParser<T> child;
-    
+
+    // NOTE: There is also TODO other class for more general default value
+    private final T defaultValue;
+
     public ZeroOnePredicate(org.apache.jena.rdf.model.Property predicate,
                             NodeParser<T> child)
     {
         super(predicate);
         this.child = child;
+        this.defaultValue = null;
     }
-    
+
     public ZeroOnePredicate(org.apache.jena.rdf.model.Property predicate,
                             NodeParser<T> child,
                             ErrorHandler onError)
     {
         super(predicate, onError);
         this.child = child;
+        this.defaultValue = null;
     }
-    
+
+    public ZeroOnePredicate(org.apache.jena.rdf.model.Property predicate,
+                            NodeParser<T> child,
+                            T defaultValue)
+    {
+        super(predicate);
+        this.child = child;
+        this.defaultValue = defaultValue;
+    }
+
+    public ZeroOnePredicate(org.apache.jena.rdf.model.Property predicate,
+                            NodeParser<T> child,
+                            T defaultValue,
+                            ErrorHandler onError)
+    {
+        super(predicate, onError);
+        this.child = child;
+        this.defaultValue = defaultValue;
+    }
+
     public NodeParser<T> getChild() {
         return child;
     }
-    
+
     @Override
     public ParseResult<? extends T>
         parse(ParseContext context,
-              org.apache.jena.rdf.model.Model model, 
+              org.apache.jena.rdf.model.Model model,
               org.apache.jena.rdf.model.Resource node)
                 throws FatalParseError
     {
         final NodeIterator iter = model.listObjectsOfProperty(node, getPredicate());
         // Not very efficient if iter.toList() > 1, but this does not happen usually:
         java.util.List<RDFNode> list = iter.toList();
-        // TODO: Warning on list.size() > 1
-        if(list.size() != 1) return null;
+        if(list.isEmpty())
+            return new ParseResult<T>(defaultValue);
+        if(list.size() > 1) {
+            org.boiler.util.StringCreator str =
+                () -> java.text.MessageFormat.format(
+                        context.getLocalized("ZeroOnePredicate_error"),
+                        getPredicate(), node);
+            return context.raise(getErrorHandler(), str);
+        }
         return child.parse(context, model, (Resource)list.get(0));
     };
-    
+
 }
