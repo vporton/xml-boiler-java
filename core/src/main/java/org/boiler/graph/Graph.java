@@ -24,18 +24,31 @@ import java.util.HashMap;
 
 /**
  * Directed graph. Used to check connectivity between two vertices.
- * 
+ *
  * @author Victor Porton
  */
 public class Graph<T> {
-    
+
     // In fact we have no duplicating entries. So we could use a faster type
     HashMap<T, HashSet<T>> adj;
-    
+
     public Graph() {
-        //adj = new ArrayList<LinkedList<T>>();
+        adj = new HashMap<T, HashSet<T>>();
     }
-    
+
+    public void addEdge(T from, T to) {
+        HashSet<T> value = adj.get(from);
+        if(value == null) {
+            value = new HashSet<T>();
+            value.add(to);
+            adj.put(from, value);
+        } else {
+            value.add(to);
+        }
+    }
+
+    // I use breadth first search (probably should cache results)
+
     // TODO
-    
+
 }
