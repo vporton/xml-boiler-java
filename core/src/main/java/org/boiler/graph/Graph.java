@@ -47,8 +47,30 @@ public class Graph<T> {
         }
     }
 
-    // I use breadth first search (probably should cache results)
+    public boolean adjanced(T from, T to) {
+        HashSet<T> set = adj.get(from);
+        if(set == null) return false;
+        return set.contains(to);
+    }
 
-    // TODO
+    // I use depth first search (TODO: probably should cache results)
+    public boolean connected(T from, T to) {
+        if(from == to) return true;
+        // discovered is not strictly required because we expect no cycles in our data, but
+        java.util.HashSet<T> discovered = new java.util.HashSet<T>();
+        java.util.Stack<T> stack = new java.util.Stack<T>();
+        stack.push(from);
+        while(!stack.isEmpty()) {
+            T node = stack.pop();
+            if(!discovered.contains(node)) discovered.add(node);
+            HashSet<T> set = adj.get(node);
+            if(set != null)
+                for(T v : set) {
+                    if(v == to) return true;
+                    discovered.add(v);
+                }
+        }
+        return false;
+    }
 
 }
