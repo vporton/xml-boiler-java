@@ -28,19 +28,19 @@ import java.util.Locale;
  * @author Victor Porton
  */
 public class ParseContext {
-    
+
     private Logger logger;
-    
+
     private java.util.ResourceBundle messages;
-    
+
     public ParseContext() {
         this(Locale.getDefault());
     }
-    
+
     public ParseContext(java.util.Locale locale) {
         messages = java.util.ResourceBundle.getBundle("org.boiler.Messages", locale);
     }
-    
+
     public Logger getLogger() {
         return logger;
     }
@@ -52,11 +52,12 @@ public class ParseContext {
     public java.util.ResourceBundle getMessages() {
         return messages;
     }
-    
+
     public String getLocalized(String str) {
         return messages.getString(str);
     }
-    
+
+    // TODO: Move this to the Enum?
     public <T> ParseResult<T>
         raise(ErrorHandler handler, org.boiler.util.StringCreator str)
                 throws FatalParseError {
@@ -81,5 +82,5 @@ public class ParseContext {
     {
         return raise(handler, ()->message);
     }
-    
+
 }
