@@ -41,8 +41,7 @@ public class CheckNodeClass {
                                 ErrorHandler handler)
             throws FatalParseError
     {
-        final String aString = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
-        final Property property = ResourceFactory.createProperty(aString);
+        final Property property = org.apache.jena.vocabulary.RDF.type;
         final NodeIterator iter = model.listObjectsOfProperty(node, property);
         while(iter.hasNext()) {
             final RDFNode klass2 = iter.next();
