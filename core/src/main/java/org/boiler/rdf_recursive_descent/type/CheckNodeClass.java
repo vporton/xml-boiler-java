@@ -57,6 +57,7 @@ public class CheckNodeClass {
             case WARNING:
                 if(logger != null)
                     logger.log(Level.WARNING, msg.create());
+                break;
             case FATAL:
                 final String message = msg.create();
                 if(logger != null)
