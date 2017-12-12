@@ -53,6 +53,7 @@ public class ClassForestParser<T> {
     {
         java.util.ArrayList<T> result = new java.util.ArrayList<T>();
         // TODO: Not the fastest algorithm
+        // TODO: It does a wrong thing if one node has multiple "type" predicates
         StmtIterator iter = model.listStatements(null,
                                                  org.apache.jena.vocabulary.RDF.type,
                                                  (RDFNode)null);
