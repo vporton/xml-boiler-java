@@ -58,8 +58,9 @@ public class ClassForestParser<T> {
                                                  (RDFNode)null);
         while(iter.hasNext()) {
             final Statement st = iter.next();
-            final Resource node = st.getSubject();
-            if(CheckNodeClass.check(subclassesGraph, context, model, node, klass, ErrorHandler.IGNORE)) {
+            final RDFNode nodeClass = st.getObject();
+            if(nodeClass.isResource() && subclassesGraph.connected(nodeClass.asResource(), klass)) {
+                final Resource node = st.getSubject();
                 ParseResult<? extends T> subResult = nodeParser.parse(context, model, node);
                 if(subResult.getSuccess()) result.add(subResult.getResult());
             }
