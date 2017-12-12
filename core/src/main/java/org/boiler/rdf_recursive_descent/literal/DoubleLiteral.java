@@ -50,7 +50,7 @@ public class DoubleLiteral extends NodeParser<Double> {
             return context.raise(getErrorHandler(), msg);
 
         }
-        return new ParseResult<Double>(new Double(node.asLiteral().getString()));
+        return new ParseResult<Double>(Double.parseDouble(node.asLiteral().getString()));
     }
 
 

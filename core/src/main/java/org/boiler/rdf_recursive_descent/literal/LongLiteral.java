@@ -42,7 +42,7 @@ public class LongLiteral extends NodeParser<Long> {
             return context.raise(getErrorHandler(), msg);
 
         }
-        return new ParseResult<Long>(new Long(node.asLiteral().getString()));
+        return new ParseResult<Long>(Long.parseLong(node.asLiteral().getString()));
     }
 
 
