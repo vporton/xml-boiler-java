@@ -32,7 +32,7 @@ import org.boiler.rdf_recursive_descent.*;
  *
  * @author Victor Porton
  */
-public class ZeroOnePredicate<T> extends PredicateParser<T> {
+public class ZeroOnePredicate<T> extends PredicateParserWithError<T> {
 
     private final NodeParser<T> child;
 

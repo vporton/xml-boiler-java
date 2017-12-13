@@ -25,7 +25,7 @@ import org.boiler.rdf_recursive_descent.*;
  *
  * @author Victor Porton
  */
-public class StringLiteral extends NodeParser<String> {
+public class StringLiteral extends NodeParserWithError<String> {
 
     @Override
     public ParseResult<? extends String>

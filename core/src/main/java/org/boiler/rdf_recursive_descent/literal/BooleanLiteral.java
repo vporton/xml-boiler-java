@@ -27,7 +27,7 @@ import org.boiler.rdf_recursive_descent.*;
  *
  * @author Victor Porton
  */
-public class BooleanLiteral extends NodeParser<Boolean> {
+public class BooleanLiteral extends NodeParserWithError<Boolean> {
 
     @Override
     public ParseResult<? extends Boolean>

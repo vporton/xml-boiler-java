@@ -27,25 +27,12 @@ public abstract class PredicateParser<T> {
 
     private final org.apache.jena.rdf.model.Property predicate;
 
-    private final ErrorHandler onError; // TODO: Maybe move onError field into concrete derived types? (because it is not used everywhere)
-
     public PredicateParser(org.apache.jena.rdf.model.Property predicate) {
         this.predicate = predicate;
-        this.onError = ErrorHandler.IGNORE;
-    }
-
-    public PredicateParser(org.apache.jena.rdf.model.Property predicate,
-                           ErrorHandler onError) {
-        this.predicate = predicate;
-        this.onError = onError;
     }
 
     public final org.apache.jena.rdf.model.Property getPredicate() {
         return predicate;
-    }
-
-    public final ErrorHandler getErrorHandler() {
-        return onError;
     }
 
     public abstract ParseResult<? extends T>

@@ -27,7 +27,7 @@ import org.apache.jena.rdf.model.Resource;
  * @author Victor Porton
  */
 // We don't use that T extends Enum<T>, "T extends Enum<T>" can be safely removed
-public class EnumParser<T extends Enum<T>> extends NodeParser<T> {
+public class EnumParser<T extends Enum<T>> extends NodeParserWithError<T> {
 
     Map<Resource, T> map;
 

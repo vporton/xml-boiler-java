@@ -40,14 +40,6 @@ public class ZeroOrMorePredicate<T> extends PredicateParser<List<T>> {
         this.child = child;
     }
 
-    public ZeroOrMorePredicate(org.apache.jena.rdf.model.Property predicate,
-                              NodeParser<T> child,
-                              ErrorHandler onError)
-    {
-        super(predicate, onError);
-        this.child = child;
-    }
-
     public NodeParser<T> getChild() {
         return child;
     }

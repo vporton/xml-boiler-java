@@ -19,19 +19,27 @@
  */
 package org.boiler.rdf_recursive_descent;
 
-// WARNING: Don't use this parser to parse recursive data structures,
-// because it may lead to infinite recursion on circular RDF.
-
 /**
  *
- * @author Victor Porton
+ * @author porton
  */
-public abstract class NodeParser<T> {
+public abstract class PredicateParserWithError<T> extends PredicateParser<T> {
 
-    public abstract ParseResult<? extends T>
-    parse(ParseContext context,
-          org.apache.jena.rdf.model.Model model,
-          org.apache.jena.rdf.model.Resource node)
-            throws FatalParseError;
+    private final ErrorHandler onError;
+
+    public PredicateParserWithError(org.apache.jena.rdf.model.Property predicate,
+                                    ErrorHandler onError) {
+        super(predicate);
+        this.onError = onError;
+    }
+
+    public PredicateParserWithError(org.apache.jena.rdf.model.Property predicate) {
+        super(predicate);
+        this.onError = ErrorHandler.IGNORE;
+    }
+
+    public final ErrorHandler getErrorHandler() {
+        return onError;
+    }
 
 }
