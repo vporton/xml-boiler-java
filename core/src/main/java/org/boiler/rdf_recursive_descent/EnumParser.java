@@ -19,7 +19,7 @@
  */
 package org.boiler.rdf_recursive_descent;
 
-import java.util.HashMap;
+import java.util.Map;
 import org.apache.jena.rdf.model.Resource;
 
 /**
@@ -29,9 +29,12 @@ import org.apache.jena.rdf.model.Resource;
 // We don't use that T extends Enum<T>, "T extends Enum<T>" can be safely removed
 public class EnumParser<T extends Enum<T>> extends NodeParser<T> {
 
-    HashMap<Resource, T> map;
+    Map<Resource, T> map;
 
-    // TODO: constructor
+    // You are recommended to use Map.ofEntries()
+    public EnumParser(Map<Resource, T> map) {
+        this.map = map;
+    }
 
     @Override
     public ParseResult<T>
@@ -40,7 +43,7 @@ public class EnumParser<T extends Enum<T>> extends NodeParser<T> {
           org.apache.jena.rdf.model.Resource node)
             throws FatalParseError
     {
-        // FIXME: What to do if Is_Blank(Node)?
+        // FIXME: What to do if node.isBlank()?
         if(!node.isResource()) {
             org.boiler.util.StringCreator msg =
                 () -> java.text.MessageFormat.format(
