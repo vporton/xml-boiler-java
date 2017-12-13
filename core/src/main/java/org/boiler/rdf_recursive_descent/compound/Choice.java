@@ -26,23 +26,23 @@ import org.boiler.rdf_recursive_descent.*;
  * @author Victor Porton
  */
 public class Choice<T> extends NodeParser<T> {
-    
+
     private NodeParser<T>[] choices;
-    
+
     Choice(NodeParser<T>[] choices) {
         this.choices = choices;
     }
-    
+
     NodeParser<T>[] getChoices() {
         return choices;
     }
-    
+
     @Override
     public ParseResult<? extends T>
-        parse(ParseContext context,
-              org.apache.jena.rdf.model.Model model, 
-              org.apache.jena.rdf.model.Resource node)
-                throws FatalParseError
+    parse(ParseContext context,
+          org.apache.jena.rdf.model.Model model,
+          org.apache.jena.rdf.model.Resource node)
+            throws FatalParseError
     {
         for(NodeParser<T> variant: choices) {
             ParseResult<? extends T> elt = variant.parse(context, model, node);

@@ -30,16 +30,16 @@ import org.boiler.rdf_recursive_descent.*;
  * @author Victor Porton
  */
 public class ZeroOrMorePredicate<T> extends PredicateParser<List<T>> {
-    
+
     private final NodeParser<T> child;
-    
+
     public ZeroOrMorePredicate(org.apache.jena.rdf.model.Property predicate,
                               NodeParser<T> child)
     {
         super(predicate);
         this.child = child;
     }
-    
+
     public ZeroOrMorePredicate(org.apache.jena.rdf.model.Property predicate,
                               NodeParser<T> child,
                               ErrorHandler onError)
@@ -47,17 +47,17 @@ public class ZeroOrMorePredicate<T> extends PredicateParser<List<T>> {
         super(predicate, onError);
         this.child = child;
     }
-    
+
     public NodeParser<T> getChild() {
         return child;
     }
-    
+
     @Override
     public ParseResult<? extends List<T>>
-        parse(ParseContext context,
-              org.apache.jena.rdf.model.Model model, 
-              org.apache.jena.rdf.model.Resource node)
-                throws FatalParseError
+    parse(ParseContext context,
+          org.apache.jena.rdf.model.Model model,
+          org.apache.jena.rdf.model.Resource node)
+            throws FatalParseError
     {
         final NodeIterator iter = model.listObjectsOfProperty(node, getPredicate());
         ArrayList<T> result = new ArrayList<>();
@@ -68,5 +68,5 @@ public class ZeroOrMorePredicate<T> extends PredicateParser<List<T>> {
         }
         return new ParseResult<ArrayList<T>>(result);
     };
-    
+
 }

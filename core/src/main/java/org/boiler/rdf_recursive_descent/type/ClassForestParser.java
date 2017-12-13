@@ -48,8 +48,8 @@ public class ClassForestParser<T> {
     }
 
     public ParseResult<List<? extends T>>
-        parse(ParseContext context, org.apache.jena.rdf.model.Model model)
-                throws FatalParseError
+    parse(ParseContext context, org.apache.jena.rdf.model.Model model)
+            throws FatalParseError
     {
         java.util.ArrayList<T> result = new java.util.ArrayList<T>();
         // TODO: Not the fastest algorithm

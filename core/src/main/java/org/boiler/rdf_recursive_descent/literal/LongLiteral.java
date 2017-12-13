@@ -29,10 +29,10 @@ public class LongLiteral extends NodeParser<Long> {
 
     @Override
     public ParseResult<? extends Long>
-        parse(ParseContext context,
-              org.apache.jena.rdf.model.Model model,
-              org.apache.jena.rdf.model.Resource node)
-                throws FatalParseError
+    parse(ParseContext context,
+          org.apache.jena.rdf.model.Model model,
+          org.apache.jena.rdf.model.Resource node)
+            throws FatalParseError
     {
         if(!node.isLiteral() || node.asLiteral().getDatatype() != org.apache.jena.vocabulary.XSD.xint) {
             org.boiler.util.StringCreator msg =

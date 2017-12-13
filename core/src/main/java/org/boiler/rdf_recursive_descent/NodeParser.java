@@ -27,25 +27,25 @@ package org.boiler.rdf_recursive_descent;
  * @author Victor Porton
  */
 public abstract class NodeParser<T> {
-    
+
     private final ErrorHandler onError; // TODO: Maybe move onError field into concrete derived types? (because it is not used everywhere)
 
     public NodeParser() {
         this.onError = ErrorHandler.IGNORE;
     }
-    
+
     public NodeParser(ErrorHandler onError) {
         this.onError = onError;
     }
-    
+
     public final ErrorHandler getErrorHandler() {
         return onError;
     }
-    
+
     public abstract ParseResult<? extends T>
-        parse(ParseContext context, 
-              org.apache.jena.rdf.model.Model model,
-              org.apache.jena.rdf.model.Resource node)
-                throws FatalParseError;
-    
+    parse(ParseContext context,
+          org.apache.jena.rdf.model.Model model,
+          org.apache.jena.rdf.model.Resource node)
+            throws FatalParseError;
+
 }

@@ -31,10 +31,10 @@ public class DoubleLiteral extends NodeParser<Double> {
 
     @Override
     public ParseResult<? extends Double>
-        parse(ParseContext context,
-              org.apache.jena.rdf.model.Model model,
-              org.apache.jena.rdf.model.Resource node)
-                throws FatalParseError
+    parse(ParseContext context,
+          org.apache.jena.rdf.model.Model model,
+          org.apache.jena.rdf.model.Resource node)
+            throws FatalParseError
     {
         Resource[] types = {
            org.apache.jena.vocabulary.XSD.xint,

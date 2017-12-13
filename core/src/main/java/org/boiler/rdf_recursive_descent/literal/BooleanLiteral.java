@@ -31,10 +31,10 @@ public class BooleanLiteral extends NodeParser<Boolean> {
 
     @Override
     public ParseResult<? extends Boolean>
-        parse(ParseContext context,
-              org.apache.jena.rdf.model.Model model,
-              org.apache.jena.rdf.model.Resource node)
-                throws FatalParseError
+    parse(ParseContext context,
+          org.apache.jena.rdf.model.Model model,
+          org.apache.jena.rdf.model.Resource node)
+            throws FatalParseError
     {
         boolean fail = false;
         if(!node.isLiteral()) fail = true;

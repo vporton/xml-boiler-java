@@ -29,34 +29,34 @@ import org.boiler.rdf_recursive_descent.*;
  * @author Victor Porton
  */
 public class OnePredicate<T> extends PredicateParser<T> {
-    
+
     private final NodeParser<T> child;
-    
+
     public OnePredicate(org.apache.jena.rdf.model.Property predicate,
-                        NodeParser<T> child) 
+                        NodeParser<T> child)
     {
         super(predicate);
         this.child = child;
     }
-    
+
     public OnePredicate(org.apache.jena.rdf.model.Property predicate,
                         NodeParser<T> child,
-                        ErrorHandler onError) 
+                        ErrorHandler onError)
     {
         super(predicate, onError);
         this.child = child;
     }
-    
+
     public NodeParser<T> getChild() {
         return child;
     }
-    
+
     @Override
     public ParseResult<? extends T>
-        parse(ParseContext context,
-              org.apache.jena.rdf.model.Model model, 
-              org.apache.jena.rdf.model.Resource node)
-                throws FatalParseError
+    parse(ParseContext context,
+          org.apache.jena.rdf.model.Model model,
+          org.apache.jena.rdf.model.Resource node)
+            throws FatalParseError
     {
         final NodeIterator iter = model.listObjectsOfProperty(node, getPredicate());
         // Not very efficient if iter.toList() > 1, but this does not happen usually:
@@ -70,5 +70,5 @@ public class OnePredicate<T> extends PredicateParser<T> {
         }
         return child.parse(context, model, (Resource)list.get(0));
     };
-    
+
 }

@@ -80,10 +80,10 @@ public class ZeroOnePredicate<T> extends PredicateParser<T> {
 
     @Override
     public ParseResult<? extends T>
-        parse(ParseContext context,
-              org.apache.jena.rdf.model.Model model,
-              org.apache.jena.rdf.model.Resource node)
-                throws FatalParseError
+    parse(ParseContext context,
+          org.apache.jena.rdf.model.Model model,
+          org.apache.jena.rdf.model.Resource node)
+            throws FatalParseError
     {
         final NodeIterator iter = model.listObjectsOfProperty(node, getPredicate());
         // Not very efficient if iter.toList() > 1, but this does not happen usually:

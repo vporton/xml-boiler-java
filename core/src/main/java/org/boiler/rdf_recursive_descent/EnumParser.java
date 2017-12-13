@@ -17,34 +17,26 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.boiler.rdf_recursive_descent.literal;
-
-import org.boiler.rdf_recursive_descent.*;
+package org.boiler.rdf_recursive_descent;
 
 /**
  *
  * @author Victor Porton
  */
-public class StringLiteral extends NodeParser<String> {
+public class EnumParser<T extends Enum<T>> extends NodeParser<T> {
 
     @Override
-    public ParseResult<? extends String>
+    public ParseResult<T>
     parse(ParseContext context,
           org.apache.jena.rdf.model.Model model,
           org.apache.jena.rdf.model.Resource node)
             throws FatalParseError
     {
-        // TODO: xsd:normalizedString support
-        if(!node.isLiteral() || node.asLiteral().getDatatype() != org.apache.jena.vocabulary.XSD.xstring) {
-            org.boiler.util.StringCreator msg =
-                () -> java.text.MessageFormat.format(
-                        context.getLocalized("StringLiteral_error"),
-                        node);
-            return context.raise(getErrorHandler(), msg);
+        // FIXME: What to do if Is_Blank(Node)?
+        if(!node.isResource()) {
 
         }
-        return new ParseResult<String>(node.asLiteral().getString());
+        // TODO
     }
-
 
 }
