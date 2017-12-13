@@ -19,11 +19,19 @@
  */
 package org.boiler.rdf_recursive_descent;
 
+import java.util.HashMap;
+import org.apache.jena.rdf.model.Resource;
+
 /**
  *
  * @author Victor Porton
  */
+// We don't use that T extends Enum<T>, "T extends Enum<T>" can be safely removed
 public class EnumParser<T extends Enum<T>> extends NodeParser<T> {
+
+    HashMap<Resource, T> map;
+
+    // TODO: constructor
 
     @Override
     public ParseResult<T>
@@ -34,9 +42,22 @@ public class EnumParser<T extends Enum<T>> extends NodeParser<T> {
     {
         // FIXME: What to do if Is_Blank(Node)?
         if(!node.isResource()) {
-
+            org.boiler.util.StringCreator msg =
+                () -> java.text.MessageFormat.format(
+                        context.getLocalized("ShouldBeIRI_error"),
+                        node);
+            return context.raise(getErrorHandler(), msg);
         }
-        // TODO
+        Resource resource = node.asResource();
+        T value = map.get(resource);
+        if(value == null) {
+            org.boiler.util.StringCreator msg =
+                () -> java.text.MessageFormat.format(
+                        context.getLocalized("UnknownIRI_error"),
+                        resource);
+            return context.raise(getErrorHandler(), msg);
+        }
+        return new ParseResult<T>(value);
     }
 
 }
