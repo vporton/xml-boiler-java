@@ -27,10 +27,9 @@ import org.apache.jena.rdf.model.ModelFactory;
  */
 public class GlobalRDFLoader {
 
-    // FIXME: Make static
-    org.apache.jena.rdf.model.Model read(String name) {
+    static org.apache.jena.rdf.model.Model read(String name) {
         org.apache.jena.rdf.model.Model model = ModelFactory.createDefaultModel();
-        java.io.InputStream stream = this.getClass().getResourceAsStream(name);
+        java.io.InputStream stream = GlobalRDFLoader.class.getResourceAsStream(name);
         model.read(stream, null, "TURTLE");
         return model;
     }
