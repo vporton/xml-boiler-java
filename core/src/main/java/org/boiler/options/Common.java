@@ -19,14 +19,38 @@
  */
 package org.boiler.options;
 
+import java.util.LinkedHashSet;
+
 /**
  *
  * @author Victor Porton
  */
 public class Common {
 
-    enum WorklowKind { TRANSFORMATION, VALIDATION }
+    public enum WorklowKind { TRANSFORMATION, VALIDATION }
 
-    // TODO
+    public enum RecursiveDownload { NONE, DEPTH_FIRST, BREADTH_FIRST }
+
+    public enum RecursiveRetrievalPriorityOrderElement { SOURCES, TARGETS }
+
+    // Too much honor to use this advanced data structure
+    public static class RecursiveRetrievalPriority extends
+            LinkedHashSet<RecursiveRetrievalPriorityOrderElement>
+    {
+        // intentionally left blank
+    }
+
+    public static final class RecursiveDownloadOptions {
+        public RecursiveDownload recursiveDownload;
+        public RecursiveRetrievalPriority retrievalPriority;
+    }
+
+    // In this version the same options are applied to all elements of the
+    // workflow, but in future we may increase "granularity" to have different
+    // options for different elements.
+    public static class BaseAutomaticWorkflowElementOptions {
+        public Common.WorklowKind kind;
+        public RecursiveDownloadOptions recursiveOptions;
+    }
 
 }
