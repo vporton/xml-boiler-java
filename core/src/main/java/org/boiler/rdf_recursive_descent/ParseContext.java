@@ -38,7 +38,7 @@ public class ParseContext {
     }
 
     public ParseContext(java.util.Locale locale) {
-        messages = java.util.ResourceBundle.getBundle("org.boiler.Messages", locale);
+        messages = java.util.ResourceBundle.getBundle("/org/boiler/Messages", locale);
     }
 
     public Logger getLogger() {
