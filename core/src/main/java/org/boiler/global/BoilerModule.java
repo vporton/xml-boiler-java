@@ -19,16 +19,28 @@
  */
 package org.boiler.global;
 
-//import com.google.inject.Guice;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import com.google.inject.Singleton;
+import com.google.inject.name.Named;
+import com.google.inject.name.Names;
 
 /**
  *
  * @author Victor Porton
  */
 public class BoilerModule extends AbstractModule {
-  @Override
-  protected void configure() {
-  }
+
+    @Override
+    protected void configure() {
+        bind(org.boiler.graph.AbstractGraph.class)
+                .annotatedWith(Names.named("subclasses"))
+                .to(org.boiler.graph.Graph.class);
+    }
+
+    @Provides @Named("subclasses") @Singleton
+    org.boiler.graph.AbstractGraph provideSubclassesGraph() {
+        return SubclassRelationLoader.createSubclassGraph();
+    }
+
 }
