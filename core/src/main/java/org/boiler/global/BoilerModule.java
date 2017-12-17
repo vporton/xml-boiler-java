@@ -40,7 +40,7 @@ public class BoilerModule extends AbstractModule {
 
     @Provides @Named("subclasses") @Singleton
     org.boiler.graph.AbstractGraph provideSubclassesGraph() {
-        return SubclassRelationLoader.createSubclassGraph();
+        return SubclassRelationLoader.loadSubclassGraph();
     }
 
 }

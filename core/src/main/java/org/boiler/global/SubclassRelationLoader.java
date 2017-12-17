@@ -28,7 +28,7 @@ import org.boiler.graph.*;
  */
 public class SubclassRelationLoader {
 
-    static org.boiler.graph.AbstractGraph<Resource> createSubclassGraph() {
+    static org.boiler.graph.AbstractGraph<Resource> loadSubclassGraph() {
         Graph<Resource> result = new Graph<Resource>();
         Model model = GlobalRDFLoader.read("/org/boiler/subclasses.ttl");
         Property predicate = ResourceFactory.createProperty(
