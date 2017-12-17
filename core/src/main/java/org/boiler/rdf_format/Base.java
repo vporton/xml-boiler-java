@@ -17,31 +17,14 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.boiler.global;
-
-import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
-import com.google.inject.Singleton;
-import com.google.inject.name.Named;
-import com.google.inject.name.Names;
+package org.boiler.rdf_format;
 
 /**
  *
  * @author Victor Porton
  */
-public class BoilerModule extends AbstractModule {
+public class Base {
 
-    @Override
-    protected void configure() {
-        bind(org.boiler.graph.AbstractGraph.class);
-    }
-
-    @Provides @Named("subclasses") @Singleton
-    org.boiler.graph.AbstractGraph provideSubclassesGraph() {
-        return SubclassRelationLoader.loadSubclassGraph();
-    }
-
-//    @Provides @Named("transformerKind") @Singleton
-//    org.boiler.rdf_recursive_descent.NodeParser<org.boiler.??>
+    static final String MAIN_NAMESPACE = "http://portonvictor.org/ns/trans/";
 
 }
