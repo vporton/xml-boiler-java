@@ -27,7 +27,7 @@ import java.util.HashMap;
  *
  * @author Victor Porton
  */
-public class Graph<T> {
+public class Graph<T> implements AbstractGraph<T> {
 
     // In fact we have no duplicating entries. So we could use a faster type
     HashMap<T, HashSet<T>> adj;
