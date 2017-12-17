@@ -13,6 +13,13 @@ compileJava {
     options.compilerArgs += ["-Xlint:unchecked"]
 }
 
+dependencies {
+    compile files('/usr/share/java/guice.jar')
+}
+//startScripts {
+//    classpath += files('/usr/share/java/guice.jar')
+//}
+
 //sourceSets {
 //    main {
 //        java {
