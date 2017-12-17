@@ -17,7 +17,7 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package asset;
+package org.boiler.rdf_format.asset;
 
 import org.apache.jena.rdf.model.Resource;
 
