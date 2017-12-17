@@ -25,6 +25,6 @@ package org.boiler.rdf_format;
  */
 public class Base {
 
-    static final String MAIN_NAMESPACE = "http://portonvictor.org/ns/trans/";
+    public static final String MAIN_NAMESPACE = "http://portonvictor.org/ns/trans/";
 
 }

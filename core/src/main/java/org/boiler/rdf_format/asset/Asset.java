@@ -27,11 +27,11 @@ import org.apache.jena.rdf.model.Resource;
  */
 public class Asset {
 
-    enum ScriptKindEnum { TRANSFORMER, VALIDATOR }
+    public enum ScriptKindEnum { TRANSFORMER, VALIDATOR }
 
-    enum TransformerKindEnum { ENTIRE, SEQUENTIAL, UP_DOWN, DOWN_UP }
+    public enum TransformerKindEnum { ENTIRE, SEQUENTIAL, UP_DOWN, DOWN_UP }
 
-    enum ValidatorKindEnum { ENTIRE, PARTS }
+    public enum ValidatorKindEnum { ENTIRE, PARTS }
 
     public static class ScriptInfo {
         public double preservance;

@@ -19,11 +19,19 @@
  */
 package org.boiler.global;
 
+import java.util.HashMap;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import com.google.inject.name.Names;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
+import org.boiler.rdf_format.asset.Asset.TransformerKindEnum;
+import org.boiler.rdf_format.asset.Asset.ValidatorKindEnum;
+import org.boiler.rdf_recursive_descent.NodeParser;
+import org.boiler.rdf_recursive_descent.EnumParser;
+import static org.boiler.rdf_format.Base.MAIN_NAMESPACE;
 
 /**
  *
@@ -41,7 +49,24 @@ public class BoilerModule extends AbstractModule {
         return SubclassRelationLoader.loadSubclassGraph();
     }
 
-//    @Provides @Named("transformerKind") @Singleton
-//    org.boiler.rdf_recursive_descent.NodeParser<org.boiler.??>
+    @Provides @Named("transformerKind") @Singleton
+    NodeParser<TransformerKindEnum>
+    provideTransformerKindParser() {
+        HashMap<Resource, TransformerKindEnum> map = new HashMap<Resource, TransformerKindEnum>();
+        map.put(ResourceFactory.createResource(MAIN_NAMESPACE + "entire"), TransformerKindEnum.ENTIRE);
+        map.put(ResourceFactory.createResource(MAIN_NAMESPACE + "sequential"), TransformerKindEnum.SEQUENTIAL);
+        map.put(ResourceFactory.createResource(MAIN_NAMESPACE + "upDown"), TransformerKindEnum.UP_DOWN);
+        map.put(ResourceFactory.createResource(MAIN_NAMESPACE + "downUp"), TransformerKindEnum.DOWN_UP);
+        return new EnumParser<TransformerKindEnum>(map);
+    }
+
+    @Provides @Named("validatorKind") @Singleton
+    NodeParser<ValidatorKindEnum>
+    provideValidatorKindParser() {
+        HashMap<Resource, ValidatorKindEnum> map = new HashMap<Resource, ValidatorKindEnum>();
+        map.put(ResourceFactory.createResource(MAIN_NAMESPACE + "entire"), ValidatorKindEnum.ENTIRE);
+        map.put(ResourceFactory.createResource(MAIN_NAMESPACE + "parts"), ValidatorKindEnum.PARTS);
+        return new EnumParser<ValidatorKindEnum>(map);
+    }
 
 }
