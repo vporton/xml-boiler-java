@@ -33,9 +33,7 @@ public class BoilerModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(org.boiler.graph.AbstractGraph.class)
-                .annotatedWith(Names.named("subclasses"))
-                .to(org.boiler.graph.Graph.class);
+        bind(org.boiler.graph.AbstractGraph.class);
     }
 
     @Provides @Named("subclasses") @Singleton
