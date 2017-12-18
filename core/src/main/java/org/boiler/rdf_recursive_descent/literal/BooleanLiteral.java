@@ -29,6 +29,10 @@ import org.boiler.rdf_recursive_descent.*;
  */
 public class BooleanLiteral extends NodeParserWithError<Boolean> {
 
+    public BooleanLiteral() { }
+
+    public BooleanLiteral(ErrorHandler onError) { super(onError); }
+
     @Override
     public ParseResult<? extends Boolean>
     parse(ParseContext context,

@@ -29,6 +29,10 @@ import org.boiler.rdf_recursive_descent.*;
  */
 public class DoubleLiteral extends NodeParserWithError<Double> {
 
+    public DoubleLiteral() { }
+
+    public DoubleLiteral(ErrorHandler onError) { super(onError); }
+
     @Override
     public ParseResult<? extends Double>
     parse(ParseContext context,
@@ -52,6 +56,5 @@ public class DoubleLiteral extends NodeParserWithError<Double> {
         }
         return new ParseResult<Double>(Double.parseDouble(node.asLiteral().getString()));
     }
-
 
 }

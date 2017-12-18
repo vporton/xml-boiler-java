@@ -25,6 +25,8 @@ import java.util.HashMap;
 /**
  * Directed graph. Used to check connectivity between two vertices.
  *
+ * TODO: Use Guava instead?
+ *
  * @author Victor Porton
  */
 public class Graph<T> implements AbstractGraph<T> {

@@ -27,6 +27,10 @@ import org.boiler.rdf_recursive_descent.*;
  */
 public class LongLiteral extends NodeParserWithError<Long> {
 
+    public LongLiteral() { }
+
+    public LongLiteral(ErrorHandler onError) { super(onError); }
+
     @Override
     public ParseResult<? extends Long>
     parse(ParseContext context,

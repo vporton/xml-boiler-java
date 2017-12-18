@@ -41,6 +41,18 @@ public class Asset {
         public TransformerKindEnum transformerKind;
         public ValidatorKindEnum validatorKind;
         public String okResult; // null means none
+
+        public ScriptInfo() { }
+
+        public ScriptInfo(ScriptInfo src) {
+            preservance     = src.preservance;
+            stability       = src.stability;
+            preference      = src.preference;
+            scriptKind      = src.scriptKind;
+            transformerKind = src.transformerKind;
+            validatorKind   = src.validatorKind;
+            okResult        = src.okResult;
+        }
     }
 
 //    enum CommandScriptInvocation { COMMAND, URL }
