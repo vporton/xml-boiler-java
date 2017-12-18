@@ -56,7 +56,9 @@ class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
         // TODO
     }
 
-    private class BaseScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
+    private static class BaseScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
+
+        private Asset.ScriptKindEnum scriptKind;
 
         private final NodeParser<Asset.TransformerKindEnum> transformerKindNodeParser;
         private final NodeParser<Asset.ValidatorKindEnum>   validatorKindNodeParser;
@@ -64,8 +66,10 @@ class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
         @Inject
         BaseScriptInfoParser(
                 @Named("transformerKind") NodeParser<Asset.TransformerKindEnum> transformerKindNodeParser,
-                @Named("validatorKind") NodeParser<Asset.ValidatorKindEnum> validatorKindNodeParser)
+                @Named("validatorKind") NodeParser<Asset.ValidatorKindEnum> validatorKindNodeParser,
+                Asset.ScriptKindEnum scriptKind)
         {
+            this.scriptKind = scriptKind;
             this.transformerKindNodeParser = transformerKindNodeParser;
             this.validatorKindNodeParser   = validatorKindNodeParser;
         }
