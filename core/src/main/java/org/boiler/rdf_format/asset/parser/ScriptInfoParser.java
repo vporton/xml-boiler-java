@@ -19,6 +19,7 @@
  */
 package org.boiler.rdf_format.asset.parser;
 
+import javax.inject.*;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
@@ -28,8 +29,12 @@ import org.boiler.rdf_format.asset.*;
 import org.boiler.rdf_format.asset.Asset;
 import org.boiler.rdf_recursive_descent.ErrorHandler;
 import org.boiler.rdf_recursive_descent.FatalParseError;
+import org.boiler.rdf_recursive_descent.NodeParserWithError;
 import org.boiler.rdf_recursive_descent.ParseContext;
 import org.boiler.rdf_recursive_descent.ParseResult;
+import org.boiler.rdf_recursive_descent.PredicateParser;
+import org.boiler.rdf_recursive_descent.PredicateParserWithError;
+import org.boiler.rdf_recursive_descent.compound.OnePredicate;
 import org.boiler.rdf_recursive_descent.compound.ZeroOnePredicate;
 import org.boiler.rdf_recursive_descent.literal.DoubleLiteral;
 
@@ -53,10 +58,23 @@ class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
 
     private class BaseScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
 
+        private final NodeParser<Asset.TransformerKindEnum> transformerKindNodeParser;
+        private final NodeParser<Asset.ValidatorKindEnum>   validatorKindNodeParser;
+
+        @Inject
+        BaseScriptInfoParser(
+                @Named("transformerKind") NodeParser<Asset.TransformerKindEnum> transformerKindNodeParser,
+                @Named("validatorKind") NodeParser<Asset.ValidatorKindEnum> validatorKindNodeParser)
+        {
+            this.transformerKindNodeParser = transformerKindNodeParser;
+            this.validatorKindNodeParser   = validatorKindNodeParser;
+        }
+
         @Override
         public ParseResult<? extends Asset.ScriptInfo>
         parse(ParseContext context, Model model, Resource node) throws FatalParseError {
             Asset.ScriptInfo result = new Asset.ScriptInfo();
+            result.scriptKind = scriptKind;
             // TODO: Check 0..1 range
             DoubleLiteral doubleParser = new DoubleLiteral(ErrorHandler.WARNING);
             ZeroOnePredicate<Double> preservanceParser =
@@ -80,7 +98,33 @@ class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
             result.preservance = preservanceParser.parse(context, model, node).getResult();
             result.stability   = stabilityParser  .parse(context, model, node).getResult();
             result.preference  = preferenceParser .parse(context, model, node).getResult();
-            // TODO
+            switch(scriptKind) {
+                case TRANSFORMER:
+                    OnePredicate<Asset.TransformerKindEnum> transformerKindParser =
+                            new OnePredicate<Asset.TransformerKindEnum>(
+                                    ResourceFactory.createProperty(Base.MAIN_NAMESPACE + "transformerKind"),
+                                    transformerKindNodeParser,
+                                    ErrorHandler.WARNING);
+                    result.transformerKind = transformerKindParser.parse(context, model, node).getResult();
+                    break;
+                case VALIDATOR:
+                    OnePredicate<Asset.ValidatorKindEnum> validatorKindParser =
+                            new OnePredicate<Asset.ValidatorKindEnum>(
+                                    ResourceFactory.createProperty(Base.MAIN_NAMESPACE + "validatorKind"),
+                                    validatorKindNodeParser,
+                                    ErrorHandler.WARNING);
+                    result.validatorKind = validatorKindParser.parse(context, model, node).getResult();
+                    break;
+            }
+            NodeParser<String> okResultNodeParser =
+                    new org.boiler.rdf_recursive_descent.literal.StringLiteral(ErrorHandler.WARNING);
+            PredicateParserWithError<String> okResultParser =
+                    new ZeroOnePredicate<String>(
+                            ResourceFactory.createProperty(Base.MAIN_NAMESPACE + "okResult"),
+                            okResultNodeParser,
+                            ErrorHandler.WARNING);
+            result.okResult = okResultParser.parse(context, model, node).getResult();;
+            return new ParseResult<Asset.ScriptInfo>(result);
         }
     }
 
