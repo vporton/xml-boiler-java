@@ -49,6 +49,7 @@ public class Graph<T> implements AbstractGraph<T> {
         }
     }
 
+    @Override
     public boolean adjanced(T from, T to) {
         HashSet<T> set = adj.get(from);
         if(set == null) return false;
