@@ -33,6 +33,7 @@ public class Asset {
 
     public enum ValidatorKindEnum { ENTIRE, PARTS }
 
+    // TODO: Distinguishing transformer and validator scripts does not conform to the specification
     public static class ScriptInfo {
         public double preservance;
         public double stability;
