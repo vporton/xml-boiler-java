@@ -22,6 +22,8 @@ package org.boiler.rdf_recursive_descent.compound;
 import org.boiler.rdf_recursive_descent.*;
 
 /**
+ * TODO: If the node conforms to more than one choice, it does not conform to
+ * the specification.
  *
  * @author Victor Porton
  */
@@ -29,11 +31,11 @@ public class Choice<T> extends NodeParser<T> {
 
     private NodeParser<T>[] choices;
 
-    Choice(NodeParser<T>[] choices) {
+    public Choice(NodeParser<T>[] choices) {
         this.choices = choices;
     }
 
-    NodeParser<T>[] getChoices() {
+    public NodeParser<T>[] getChoices() {
         return choices;
     }
 
