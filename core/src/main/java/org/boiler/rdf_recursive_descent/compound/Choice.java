@@ -22,8 +22,8 @@ package org.boiler.rdf_recursive_descent.compound;
 import org.boiler.rdf_recursive_descent.*;
 
 /**
- * TODO: If the node conforms to more than one choice, it does not conform to
- * the specification.
+ * TODO: If the node conforms to more than one choice, this class does
+ * not conform to the specification.
  *
  * @author Victor Porton
  */
