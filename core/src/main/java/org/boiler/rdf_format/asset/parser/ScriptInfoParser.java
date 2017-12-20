@@ -33,11 +33,13 @@ import org.boiler.rdf_recursive_descent.PredicateParserWithError;
 import org.boiler.rdf_recursive_descent.compound.OnePredicate;
 import org.boiler.rdf_recursive_descent.compound.ZeroOnePredicate;
 import org.boiler.rdf_recursive_descent.literal.DoubleLiteral;
+import org.boiler.rdf_recursive_descent.type.CheckNodeClass;
 import org.boiler.rdf_format.asset.Asset.TransformerKindEnum;
 import org.boiler.rdf_format.asset.Asset.ValidatorKindEnum;
 import org.boiler.rdf_format.Base;
 import org.boiler.rdf_recursive_descent.NodeParser;
 import org.boiler.rdf_format.asset.Asset;
+import org.boiler.graph.AbstractGraph;
 import static org.boiler.rdf_format.Base.MAIN_NAMESPACE;
 
 /**
@@ -147,4 +149,28 @@ class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
         }
     }
 
+    private static class CommandScriptInfoParser extends NodeParser<Asset.CommandScriptInfo> {
+
+        private final AbstractGraph<Resource> subclasses;
+
+        private final Asset.ScriptKindEnum scriptKind;
+
+        CommandScriptInfoParser(AbstractGraph<Resource> subclasses, Asset.ScriptKindEnum scriptKind) {
+            this.subclasses = subclasses;
+            this.scriptKind = scriptKind;
+        }
+
+        @Override
+        public ParseResult<? extends Asset.CommandScriptInfo>
+        parse(ParseContext context, Model model, Resource node) throws FatalParseError {
+            Resource klass = ResourceFactory.createProperty(MAIN_NAMESPACE + "Command");
+            if(!CheckNodeClass.check(subclasses, context, model, node, klass, ErrorHandler.IGNORE))
+                return new ParseResult<>();
+            ParseResult<? extends Asset.ScriptInfo> base =
+                    new BaseScriptInfoParser(scriptKind).parse(context, model, node);
+            if(!base.getSuccess()) return new ParseResult<>();
+            Asset.ScriptInfo result = new Asset.ScriptInfo(base.getResult());
+            // TODO
+        }
+    }
 }
