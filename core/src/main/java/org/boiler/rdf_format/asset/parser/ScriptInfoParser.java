@@ -20,6 +20,7 @@
 package org.boiler.rdf_format.asset.parser;
 
 import javax.inject.*;
+import com.google.inject.assistedinject.Assisted;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
@@ -42,7 +43,8 @@ import org.boiler.rdf_recursive_descent.literal.DoubleLiteral;
  *
  * @author Victor Porton
  */
-class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
+// made public for Guice
+public class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
 
     private Asset.ScriptKindEnum scriptKind;
 
@@ -56,18 +58,23 @@ class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
         // TODO
     }
 
-    private static class BaseScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
+    // made public for Guice
+    public static class BaseScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
 
         private Asset.ScriptKindEnum scriptKind;
 
         private final NodeParser<Asset.TransformerKindEnum> transformerKindNodeParser;
         private final NodeParser<Asset.ValidatorKindEnum>   validatorKindNodeParser;
 
+        public interface Factory {
+            BaseScriptInfoParser create(Asset.ScriptKindEnum scriptKind);
+        }
+
         @Inject
         BaseScriptInfoParser(
                 @Named("transformerKind") NodeParser<Asset.TransformerKindEnum> transformerKindNodeParser,
                 @Named("validatorKind") NodeParser<Asset.ValidatorKindEnum> validatorKindNodeParser,
-                Asset.ScriptKindEnum scriptKind)
+                @Assisted Asset.ScriptKindEnum scriptKind)
         {
             this.scriptKind = scriptKind;
             this.transformerKindNodeParser = transformerKindNodeParser;
