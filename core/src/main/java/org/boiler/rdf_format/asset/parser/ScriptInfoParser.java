@@ -20,8 +20,10 @@
 package org.boiler.rdf_format.asset.parser;
 
 import java.util.HashMap;
-import javax.inject.*;
+import com.google.inject.name.Named;
+import com.google.inject.assistedinject.Assisted;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.boiler.rdf_recursive_descent.EnumParser;
@@ -32,7 +34,8 @@ import org.boiler.rdf_recursive_descent.ParseResult;
 import org.boiler.rdf_recursive_descent.PredicateParserWithError;
 import org.boiler.rdf_recursive_descent.compound.OnePredicate;
 import org.boiler.rdf_recursive_descent.compound.ZeroOnePredicate;
-import org.boiler.rdf_recursive_descent.literal.DoubleLiteral;
+import org.boiler.rdf_recursive_descent.compound.Choice;
+import org.boiler.rdf_recursive_descent.literal.*;
 import org.boiler.rdf_recursive_descent.type.CheckNodeClass;
 import org.boiler.rdf_format.asset.Asset.TransformerKindEnum;
 import org.boiler.rdf_format.asset.Asset.ValidatorKindEnum;
@@ -46,21 +49,34 @@ import static org.boiler.rdf_format.Base.MAIN_NAMESPACE;
  *
  * @author Victor Porton
  */
-class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
+public class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
 
-    private Asset.ScriptKindEnum scriptKind;
+    private final AbstractGraph<Resource> subclasses;
 
-    private ScriptInfoParser(Asset.ScriptKindEnum scriptKind) {
+    private final Asset.ScriptKindEnum scriptKind;
+
+    public interface Factory {
+        ScriptInfoParser create(Asset.ScriptKindEnum scriptKind);
+    }
+
+    private ScriptInfoParser(@Named("subclasses") AbstractGraph<Resource> subclasses,
+                             @Assisted Asset.ScriptKindEnum scriptKind) {
+        this.subclasses = subclasses;
         this.scriptKind = scriptKind;
     }
 
     @Override
     public ParseResult<? extends Asset.ScriptInfo>
     parse(ParseContext context, Model model, Resource node) throws FatalParseError {
-        // TODO
+        MyBaseParser[] choices = {new CommandScriptInfoParser(subclasses, scriptKind),
+                                  new WebServiceScriptInfoParser(subclasses, scriptKind)};
+        NodeParser<Asset.ScriptInfo> realParser = new Choice<Asset.ScriptInfo>(choices);
+        return realParser.parse(context, model, node);
     }
 
-    private static class BaseScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
+    private static abstract class MyBaseParser extends NodeParser<Asset.ScriptInfo> { }
+
+    private static class BaseScriptInfoParser extends MyBaseParser {
 
         private final Asset.ScriptKindEnum scriptKind;
 
@@ -149,7 +165,7 @@ class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
         }
     }
 
-    private static class CommandScriptInfoParser extends NodeParser<Asset.CommandScriptInfo> {
+    private static class CommandScriptInfoParser extends MyBaseParser {
 
         private final AbstractGraph<Resource> subclasses;
 
@@ -169,8 +185,57 @@ class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
             ParseResult<? extends Asset.ScriptInfo> base =
                     new BaseScriptInfoParser(scriptKind).parse(context, model, node);
             if(!base.getSuccess()) return new ParseResult<>();
-            Asset.ScriptInfo result = new Asset.ScriptInfo(base.getResult());
+
+            Asset.CommandScriptInfo result = new Asset.CommandScriptInfo(base.getResult());
+
+            Property pred1 = ResourceFactory.createProperty(MAIN_NAMESPACE + "scriptURL");
+            PredicateParserWithError<String> str1Parser =
+                    new ZeroOnePredicate<String>(pred1, new StringLiteral(), ErrorHandler.WARNING);
+            String str1 = str1Parser.parse(context, model, node).getResult();
+            Property pred2 = ResourceFactory.createProperty(MAIN_NAMESPACE + "commandString");
+            PredicateParserWithError<String> str2Parser =
+                    new ZeroOnePredicate<String>(pred2, new StringLiteral(), ErrorHandler.WARNING);
+            String str2 = str2Parser.parse(context, model, node).getResult();
+            if(str1 == null && str2 == null)
+                return context.raise(
+                        ErrorHandler.WARNING,
+                        java.text.MessageFormat.format(context.getLocalized("CommandScriptBothMissing_error"), node));
+            if(str1 != null && str2 != null)
+                return context.raise(
+                        ErrorHandler.WARNING,
+                        java.text.MessageFormat.format(context.getLocalized("CommandScriptBothPresent_error"), node));
             // TODO
+            return new ParseResult<>(result);
         }
+
     }
+
+    private static class WebServiceScriptInfoParser extends MyBaseParser {
+
+        private final AbstractGraph<Resource> subclasses;
+
+        private final Asset.ScriptKindEnum scriptKind;
+
+        WebServiceScriptInfoParser(AbstractGraph<Resource> subclasses, Asset.ScriptKindEnum scriptKind) {
+            this.subclasses = subclasses;
+            this.scriptKind = scriptKind;
+        }
+
+        @Override
+        public ParseResult<? extends Asset.WebServiceScriptInfo>
+        parse(ParseContext context, Model model, Resource node) throws FatalParseError {
+            Resource klass = ResourceFactory.createProperty(MAIN_NAMESPACE + "WebService");
+            if(!CheckNodeClass.check(subclasses, context, model, node, klass, ErrorHandler.IGNORE))
+                return new ParseResult<>();
+            ParseResult<? extends Asset.ScriptInfo> base =
+                    new BaseScriptInfoParser(scriptKind).parse(context, model, node);
+            if(!base.getSuccess()) return new ParseResult<>();
+
+            Asset.WebServiceScriptInfo result = new Asset.WebServiceScriptInfo(base.getResult());
+            // TODO
+            return new ParseResult<>(result);
+        }
+
+    }
+
 }
