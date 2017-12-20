@@ -142,7 +142,7 @@ class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
                             ResourceFactory.createProperty(Base.MAIN_NAMESPACE + "okResult"),
                             okResultNodeParser,
                             ErrorHandler.WARNING);
-            result.okResult = okResultParser.parse(context, model, node).getResult();;
+            result.okResult = okResultParser.parse(context, model, node).getResult();
             return new ParseResult<Asset.ScriptInfo>(result);
         }
     }
