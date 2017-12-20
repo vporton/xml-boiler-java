@@ -19,32 +19,32 @@
  */
 package org.boiler.rdf_format.asset.parser;
 
+import java.util.HashMap;
 import javax.inject.*;
-import com.google.inject.assistedinject.Assisted;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
-import org.boiler.rdf_format.Base;
-import org.boiler.rdf_recursive_descent.NodeParser;
-import org.boiler.rdf_format.asset.*;
-import org.boiler.rdf_format.asset.Asset;
+import org.boiler.rdf_recursive_descent.EnumParser;
 import org.boiler.rdf_recursive_descent.ErrorHandler;
 import org.boiler.rdf_recursive_descent.FatalParseError;
-import org.boiler.rdf_recursive_descent.NodeParserWithError;
 import org.boiler.rdf_recursive_descent.ParseContext;
 import org.boiler.rdf_recursive_descent.ParseResult;
-import org.boiler.rdf_recursive_descent.PredicateParser;
 import org.boiler.rdf_recursive_descent.PredicateParserWithError;
 import org.boiler.rdf_recursive_descent.compound.OnePredicate;
 import org.boiler.rdf_recursive_descent.compound.ZeroOnePredicate;
 import org.boiler.rdf_recursive_descent.literal.DoubleLiteral;
+import org.boiler.rdf_format.asset.Asset.TransformerKindEnum;
+import org.boiler.rdf_format.asset.Asset.ValidatorKindEnum;
+import org.boiler.rdf_format.Base;
+import org.boiler.rdf_recursive_descent.NodeParser;
+import org.boiler.rdf_format.asset.Asset;
+import static org.boiler.rdf_format.Base.MAIN_NAMESPACE;
 
 /**
  *
  * @author Victor Porton
  */
-// made public for Guice
-public class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
+class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
 
     private Asset.ScriptKindEnum scriptKind;
 
@@ -58,27 +58,35 @@ public class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
         // TODO
     }
 
-    // made public for Guice
-    public static class BaseScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
+    private static class BaseScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
 
-        private Asset.ScriptKindEnum scriptKind;
+        private final Asset.ScriptKindEnum scriptKind;
 
-        private final NodeParser<Asset.TransformerKindEnum> transformerKindNodeParser;
-        private final NodeParser<Asset.ValidatorKindEnum>   validatorKindNodeParser;
+        private static NodeParser<TransformerKindEnum> transformerKindParser = null;
+        private static NodeParser<ValidatorKindEnum>   validatorKindParser   = null;
 
-        public interface Factory {
-            BaseScriptInfoParser create(Asset.ScriptKindEnum scriptKind);
+        private static NodeParser<TransformerKindEnum> getTransformerKindParser() {
+            if(transformerKindParser != null)
+                return transformerKindParser;
+            HashMap<Resource, TransformerKindEnum> map = new HashMap<Resource, TransformerKindEnum>();
+            map.put(ResourceFactory.createResource(MAIN_NAMESPACE + "entire"), TransformerKindEnum.ENTIRE);
+            map.put(ResourceFactory.createResource(MAIN_NAMESPACE + "sequential"), TransformerKindEnum.SEQUENTIAL);
+            map.put(ResourceFactory.createResource(MAIN_NAMESPACE + "upDown"), TransformerKindEnum.UP_DOWN);
+            map.put(ResourceFactory.createResource(MAIN_NAMESPACE + "downUp"), TransformerKindEnum.DOWN_UP);
+            return transformerKindParser = new EnumParser<TransformerKindEnum>(map);
         }
 
-        @Inject
-        BaseScriptInfoParser(
-                @Named("transformerKind") NodeParser<Asset.TransformerKindEnum> transformerKindNodeParser,
-                @Named("validatorKind") NodeParser<Asset.ValidatorKindEnum> validatorKindNodeParser,
-                @Assisted Asset.ScriptKindEnum scriptKind)
-        {
+        private static NodeParser<ValidatorKindEnum> getValidatorKindParser() {
+            if(validatorKindParser != null)
+                return validatorKindParser;
+            HashMap<Resource, ValidatorKindEnum> map = new HashMap<Resource, ValidatorKindEnum>();
+            map.put(ResourceFactory.createResource(MAIN_NAMESPACE + "entire"), ValidatorKindEnum.ENTIRE);
+            map.put(ResourceFactory.createResource(MAIN_NAMESPACE + "parts"), ValidatorKindEnum.PARTS);
+            return validatorKindParser = new EnumParser<ValidatorKindEnum>(map);
+        }
+
+        BaseScriptInfoParser(Asset.ScriptKindEnum scriptKind) {
             this.scriptKind = scriptKind;
-            this.transformerKindNodeParser = transformerKindNodeParser;
-            this.validatorKindNodeParser   = validatorKindNodeParser;
         }
 
         @Override
@@ -102,7 +110,7 @@ public class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
                             ErrorHandler.WARNING);
             ZeroOnePredicate<Double> preferenceParser =
                     new ZeroOnePredicate<Double>(
-                            ResourceFactory.createProperty(Base.MAIN_NAMESPACE + "prefernce"),
+                            ResourceFactory.createProperty(Base.MAIN_NAMESPACE + "preference"),
                             doubleParser,
                             1.0d,
                             ErrorHandler.WARNING);
@@ -114,7 +122,7 @@ public class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
                     OnePredicate<Asset.TransformerKindEnum> transformerKindParser =
                             new OnePredicate<Asset.TransformerKindEnum>(
                                     ResourceFactory.createProperty(Base.MAIN_NAMESPACE + "transformerKind"),
-                                    transformerKindNodeParser,
+                                    getTransformerKindParser(),
                                     ErrorHandler.WARNING);
                     result.transformerKind = transformerKindParser.parse(context, model, node).getResult();
                     break;
@@ -122,7 +130,7 @@ public class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
                     OnePredicate<Asset.ValidatorKindEnum> validatorKindParser =
                             new OnePredicate<Asset.ValidatorKindEnum>(
                                     ResourceFactory.createProperty(Base.MAIN_NAMESPACE + "validatorKind"),
-                                    validatorKindNodeParser,
+                                    getValidatorKindParser(),
                                     ErrorHandler.WARNING);
                     result.validatorKind = validatorKindParser.parse(context, model, node).getResult();
                     break;
