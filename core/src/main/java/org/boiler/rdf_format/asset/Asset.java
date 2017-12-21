@@ -19,6 +19,8 @@
  */
 package org.boiler.rdf_format.asset;
 
+import java.util.AbstractSet;
+import java.util.AbstractList;
 import org.apache.jena.rdf.model.Resource;
 
 /**
@@ -74,9 +76,16 @@ public class Asset {
             super(src);
         }
 
-        public String action; // action URL
+        public Resource action; // action URL
         public String method;
         public String xmlField;
+    }
+
+    public static class Transformer {
+        AbstractSet<Resource> sourceNamespaces, targetNamespaces;
+        boolean ignoreTarget;
+        Resource precedence;
+        AbstractList<? extends ScriptInfo> scripts;
     }
 
 }
