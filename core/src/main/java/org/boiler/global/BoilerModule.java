@@ -24,6 +24,7 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
+import org.boiler.rdf_format.asset.parser.ScriptInfoParser;
 
 /**
  *
@@ -34,6 +35,8 @@ public class BoilerModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(org.boiler.graph.AbstractGraph.class);
+        install(new FactoryModuleBuilder()
+            .build(ScriptInfoParser.Factory.class));
     }
 
     @Provides @Named("subclasses") @Singleton

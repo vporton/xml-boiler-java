@@ -59,12 +59,21 @@ public class Asset {
 //    enum CommandScriptInvocation { COMMAND, URL }
 
     public static class CommandScriptInfo extends ScriptInfo {
+
+        public CommandScriptInfo(ScriptInfo src) {
+            super(src);
+        }
+
         public Resource language;
         public String minVersion, maxVersion; // may be null
         public String commandString, scriptURL; // either of them should be null
     }
 
     public static class WebServiceScriptInfo extends ScriptInfo {
+        public WebServiceScriptInfo(ScriptInfo src) {
+            super(src);
+        }
+
         public String action; // action URL
         public String method;
         public String xmlField;
