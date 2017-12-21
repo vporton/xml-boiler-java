@@ -142,15 +142,18 @@ public class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
                                     ResourceFactory.createProperty(Base.MAIN_NAMESPACE + "transformerKind"),
                                     getTransformerKindParser(),
                                     ErrorHandler.WARNING);
-                    result.transformerKind = transformerKindParser.parse(context, model, node).getResult();
+                    ParseResult<? extends TransformerKindEnum> transformerKind =
+                            transformerKindParser.parse(context, model, node);
+                    if(!transformerKind.getSuccess())
+                        return new ParseResult<>();
+                    result.transformerKind = transformerKind.getResult();
                     break;
                 case VALIDATOR:
-                    OnePredicate<Asset.ValidatorKindEnum> validatorKindParser =
-                            new OnePredicate<Asset.ValidatorKindEnum>(
-                                    ResourceFactory.createProperty(Base.MAIN_NAMESPACE + "validatorKind"),
-                                    getValidatorKindParser(),
-                                    ErrorHandler.WARNING);
-                    result.validatorKind = validatorKindParser.parse(context, model, node).getResult();
+                    ParseResult<? extends ValidatorKindEnum> validatorKind =
+                            validatorKindParser.parse(context, model, node);
+                    if(!validatorKind.getSuccess())
+                        return new ParseResult<>();
+                    result.validatorKind = validatorKind.getResult();
                     break;
             }
             NodeParser<String> okResultNodeParser =
@@ -219,7 +222,9 @@ public class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
             Property languagePred = ResourceFactory.createProperty(MAIN_NAMESPACE + "language");
             PredicateParserWithError<Resource> languageParser =
                     new OnePredicate<>(languagePred, new IRILiteral(ErrorHandler.WARNING));
-            result.language = languageParser.parse(context, model, node).getResult();
+            ParseResult<? extends Resource> language = languageParser.parse(context, model, node);
+            if(!language.getSuccess()) return new ParseResult<>();
+            result.language = language.getResult();
 
             return new ParseResult<>(result);
         }
@@ -248,7 +253,28 @@ public class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
             if(!base.getSuccess()) return new ParseResult<>();
 
             Asset.WebServiceScriptInfo result = new Asset.WebServiceScriptInfo(base.getResult());
-            // TODO
+
+            Property actionPred = ResourceFactory.createProperty(MAIN_NAMESPACE + "action");
+            PredicateParserWithError<Resource> actionParser =
+                    new OnePredicate<>(actionPred, new IRILiteral(ErrorHandler.WARNING));
+            ParseResult<? extends Resource> action = actionParser.parse(context, model, node);
+            if(!action.getSuccess()) return new ParseResult<>();
+            result.action = action.getResult();
+
+            Property methodPred = ResourceFactory.createProperty(MAIN_NAMESPACE + "method");
+            PredicateParserWithError<String> methodParser =
+                    new OnePredicate<String>(methodPred, new StringLiteral(ErrorHandler.WARNING));
+            ParseResult<? extends String> method = methodParser.parse(context, model, node);
+            if(!method.getSuccess()) return new ParseResult<>();
+            result.method = method.getResult();
+
+            Property xmlFieldPred = ResourceFactory.createProperty(MAIN_NAMESPACE + "xmlField");
+            PredicateParserWithError<String> xmlFieldParser =
+                    new OnePredicate<String>(xmlFieldPred, new StringLiteral(ErrorHandler.WARNING));
+            ParseResult<? extends String> xmlField = xmlFieldParser.parse(context, model, node);
+            if(!xmlField.getSuccess()) return new ParseResult<>();
+            result.xmlField = xmlField.getResult();
+
             return new ParseResult<>(result);
         }
 
