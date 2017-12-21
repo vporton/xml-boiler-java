@@ -204,7 +204,23 @@ public class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
                 return context.raise(
                         ErrorHandler.WARNING,
                         java.text.MessageFormat.format(context.getLocalized("CommandScriptBothPresent_error"), node));
-            // TODO
+            result.scriptURL     = str1;
+            result.commandString = str2;
+
+            Property minVersionPred = ResourceFactory.createProperty(MAIN_NAMESPACE + "minVersion");
+            PredicateParserWithError<String> minParser =
+                    new ZeroOnePredicate<String>(minVersionPred, new StringLiteral(ErrorHandler.WARNING));
+            result.minVersion = minParser.parse(context, model, node).getResult();
+            Property maxVersionPred = ResourceFactory.createProperty(MAIN_NAMESPACE + "maxVersion");
+            PredicateParserWithError<String> maxParser =
+                    new ZeroOnePredicate<String>(maxVersionPred, new StringLiteral(ErrorHandler.WARNING));
+            result.maxVersion = maxParser.parse(context, model, node).getResult();
+
+            Property languagePred = ResourceFactory.createProperty(MAIN_NAMESPACE + "language");
+            PredicateParserWithError<Resource> languageParser =
+                    new OnePredicate<>(languagePred, new IRILiteral(ErrorHandler.WARNING));
+            result.language = languageParser.parse(context, model, node).getResult();
+
             return new ParseResult<>(result);
         }
 
