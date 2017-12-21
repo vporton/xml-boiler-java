@@ -2,7 +2,7 @@
 @prefix lang: <http://portonvictor.org/ns/trans/scripts/#> .
 
 # The list of all interpreters in order of precedence (these interpreters which
-# are earlier in the list "win".
+# are earlier in the list "win").
 :boiler :interpretersList
 (
     [
