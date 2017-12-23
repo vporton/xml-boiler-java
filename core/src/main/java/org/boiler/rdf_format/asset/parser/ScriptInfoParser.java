@@ -55,6 +55,8 @@ public class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
 
     private final Asset.ScriptKindEnum scriptKind;
 
+    // TODO: script arguments
+
 //    public interface Factory {
 //        ScriptInfoParser create(Asset.ScriptKindEnum scriptKind);
 //    }
