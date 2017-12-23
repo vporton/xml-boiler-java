@@ -100,7 +100,15 @@ public class TransformerParser extends NodeParser<Asset.Transformer> {
         ParseResult<? extends Boolean> ignoreTarget = ignoreTargetParser.parse(context, model, node);
         if(!ignoreTarget.getSuccess()) return new ParseResult<>();
         result.ignoreTarget = ignoreTarget.getResult();
-        // TODO
+
+        Property scriptProperty = ResourceFactory.createProperty(MAIN_NAMESPACE + "script");
+        NodeParser<Asset.ScriptInfo> scriptNodeParser =
+                new ScriptInfoParser(subclasses, Asset.ScriptKindEnum.TRANSFORMER);
+        OneOrMorePredicate<Asset.ScriptInfo> scriptParser =
+                new OneOrMorePredicate<>(scriptProperty, scriptNodeParser, ErrorHandler.WARNING);
+        result.scripts = scriptParser.parse(context, model, node).getResult();
+
+        return new ParseResult<>(result);
     }
 
 }

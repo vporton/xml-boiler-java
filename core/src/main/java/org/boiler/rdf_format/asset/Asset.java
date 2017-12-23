@@ -20,7 +20,7 @@
 package org.boiler.rdf_format.asset;
 
 import java.util.AbstractSet;
-import java.util.AbstractList;
+import java.util.List;
 import org.apache.jena.rdf.model.Resource;
 
 /**
@@ -82,10 +82,10 @@ public class Asset {
     }
 
     public static class Transformer {
-        AbstractSet<Resource> sourceNamespaces, targetNamespaces;
-        boolean ignoreTarget;
-        Resource precedence;
-        AbstractList<? extends ScriptInfo> scripts;
+        public AbstractSet<Resource> sourceNamespaces, targetNamespaces;
+        public boolean ignoreTarget;
+        public Resource precedence;
+        public List<? extends ScriptInfo> scripts;
     }
 
 }

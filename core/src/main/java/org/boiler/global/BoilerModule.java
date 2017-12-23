@@ -35,8 +35,8 @@ public class BoilerModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(org.boiler.graph.AbstractGraph.class);
-        install(new FactoryModuleBuilder()
-            .build(ScriptInfoParser.Factory.class));
+//        install(new FactoryModuleBuilder()
+//            .build(ScriptInfoParser.Factory.class));
     }
 
     @Provides @Named("subclasses") @Singleton

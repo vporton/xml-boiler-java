@@ -55,12 +55,12 @@ public class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
 
     private final Asset.ScriptKindEnum scriptKind;
 
-    public interface Factory {
-        ScriptInfoParser create(Asset.ScriptKindEnum scriptKind);
-    }
+//    public interface Factory {
+//        ScriptInfoParser create(Asset.ScriptKindEnum scriptKind);
+//    }
 
-    private ScriptInfoParser(@Named("subclasses") AbstractGraph<Resource> subclasses,
-                             @Assisted Asset.ScriptKindEnum scriptKind) {
+    public ScriptInfoParser(AbstractGraph<Resource> subclasses,
+                             Asset.ScriptKindEnum scriptKind) {
         this.subclasses = subclasses;
         this.scriptKind = scriptKind;
     }
