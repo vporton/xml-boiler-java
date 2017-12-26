@@ -35,3 +35,9 @@ Tey also http://commons.apache.org/proper/commons-exec/ to spawn processes.
   extracted from the package version, see https://www.debian.org/doc/debian-policy/#s-f-version
   for the format.
   Also https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=883133
+
+Runtime.getRuntime().addShutdownHook(new Thread() {
+    public void run() { /*
+       my shutdown code here
+    */ }
+ });
