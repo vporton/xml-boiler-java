@@ -50,7 +50,7 @@ public class TransformerParser extends NodeParser<Asset.Transformer> {
 
     private final AbstractGraph<Resource> subclasses;
 
-    private TransformerParser(@Named("subclasses") AbstractGraph<Resource> subclasses) {
+    public TransformerParser(AbstractGraph<Resource> subclasses) {
         this.subclasses = subclasses;
     }
 

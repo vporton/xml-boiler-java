@@ -22,12 +22,22 @@ package org.boiler.rdf_format.asset.parser;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.name.Named;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Level;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.RDFList;
+import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
+import static org.apache.jena.vocabulary.RDFS.seeAlso;
 import org.boiler.graph.AbstractGraph;
 import org.boiler.rdf_format.asset.Asset;
 import org.boiler.rdf_recursive_descent.type.ClassForestParser;
 import static org.boiler.rdf_format.Base.MAIN_NAMESPACE;
+import org.boiler.rdf_recursive_descent.ErrorHandler;
 import org.boiler.rdf_recursive_descent.FatalParseError;
 import org.boiler.rdf_recursive_descent.ParseContext;
 
@@ -44,7 +54,7 @@ public class AssetParser {
     }
 
     @Inject
-    public Asset.AssetInfo parse(org.apache.jena.rdf.model.Model model) throws FatalParseError {
+    public Asset.AssetInfo parse(Model model) throws FatalParseError {
         Asset.AssetInfo result = new Asset.AssetInfo();
 
         ParseContext context = new ParseContext();
@@ -55,8 +65,49 @@ public class AssetParser {
                         new TransformerParser(subclasses), klass, subclasses);
         result.transformers = transformerParser.parse(context, model).getResult();
 
-        // TODO: seeAlso
+        result.seeAlsoTransform = scanSeeAlso(context, model, MAIN_NAMESPACE + "transform");
+        result.seeAlsoValidate  = scanSeeAlso(context, model, MAIN_NAMESPACE + "validate" );
 
+        return result;
+    }
+
+    private List<Resource> scanSeeAlso(ParseContext context, Model model, String kindURI)
+            throws FatalParseError
+    {
+        Resource kind = ResourceFactory.createResource(kindURI);
+        List<? super Resource> seeAlsoNodes =
+                model.listObjectsOfProperty(kind, seeAlso).toList();
+        if(seeAlsoNodes.size() > 1) {
+            String str = java.text.MessageFormat.format(
+                    context.getLocalized("Asset_multiple_seeAlso"),
+                    model);
+            context.getLogger().log(Level.SEVERE, str);
+            throw new FatalParseError(str);
+        }
+        Resource seeAlsoHead = (Resource)seeAlsoNodes.get(0);
+        // TODO: Separate the below into a special class
+        RDFList list = seeAlsoHead.as(RDFList.class);
+        if(!list.isValid()) {
+            String str = java.text.MessageFormat.format(
+                    context.getLocalized("RDFListError"),
+                    seeAlsoHead);
+            context.getLogger().log(Level.SEVERE, str);
+            throw new FatalParseError(str);
+        }
+        Iterator<RDFNode> iter = list.iterator();
+        ArrayList<Resource> result = new ArrayList<Resource>();
+        while(iter.hasNext()) {
+            try {
+                result.add((Resource)iter.next());
+            }
+            catch(ClassCastException e) {
+                String str = java.text.MessageFormat.format(
+                        context.getLocalized("RDFListError"),
+                        seeAlsoHead);
+                context.getLogger().log(Level.SEVERE, str);
+                throw new FatalParseError(str);
+            }
+        }
         return result;
     }
 

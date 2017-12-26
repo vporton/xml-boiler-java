@@ -88,4 +88,11 @@ public class Asset {
         public List<? extends ScriptInfo> scripts;
     }
 
+    public static class AssetInfo {
+        public List<? extends Transformer> transformers;
+        // TODO: validators
+        public List<Resource> seeAlsoTransform, seeAlsoValidate;
+        // TODO: precedences
+    }
+
 }
