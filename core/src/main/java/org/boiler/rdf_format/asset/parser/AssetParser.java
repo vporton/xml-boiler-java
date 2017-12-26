@@ -97,16 +97,15 @@ public class AssetParser {
         Iterator<RDFNode> iter = list.iterator();
         ArrayList<Resource> result = new ArrayList<Resource>();
         while(iter.hasNext()) {
-            try {
-                result.add((Resource)iter.next());
-            }
-            catch(ClassCastException e) {
+            RDFNode subnode = iter.next();
+            if(!subnode.isURIResource()) {
                 String str = java.text.MessageFormat.format(
-                        context.getLocalized("RDFListError"),
+                        context.getLocalized("seeAlsoResource"),
                         seeAlsoHead);
                 context.getLogger().log(Level.SEVERE, str);
                 throw new FatalParseError(str);
             }
+            result.add((Resource)subnode);
         }
         return result;
     }
