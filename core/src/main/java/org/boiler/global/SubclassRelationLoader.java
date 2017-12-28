@@ -32,12 +32,12 @@ public class SubclassRelationLoader {
         org.jgrapht.Graph<Resource, Void> result =
                 new org.jgrapht.graph.DefaultDirectedGraph<Resource, Void>(Void.class);
         Model model = GlobalRDFLoader.read("/org/boiler/subclasses.ttl");
-        Property predicate = ResourceFactory.createProperty(
-                "http://www.w3.org/2000/01/rdf-schema#subClassOf");
-        StmtIterator iter = model.listStatements(null, predicate, (RDFNode)null);
+        StmtIterator iter = model.listStatements(null,
+                                                 org.apache.jena.vocabulary.RDFS.subClassOf,
+                                                 (RDFNode)null);
         while(iter.hasNext()) {
             Statement st = iter.next();
-            // Let conversion exception on incorrect data
+            // FIXME: conversion exception on incorrect data
             result.addEdge(st.getSubject(), (Resource)st.getObject());
         }
         return new ConnectivityInspector<Resource, Void>(result);
