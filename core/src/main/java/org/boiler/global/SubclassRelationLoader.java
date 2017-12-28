@@ -19,8 +19,8 @@
  */
 package org.boiler.global;
 
+import org.jgrapht.alg.ConnectivityInspector;
 import org.apache.jena.rdf.model.*;
-import org.boiler.graph.*;
 
 /**
  *
@@ -28,8 +28,9 @@ import org.boiler.graph.*;
  */
 public class SubclassRelationLoader {
 
-    static org.boiler.graph.AbstractGraph<Resource> loadSubclassGraph() {
-        Graph<Resource> result = new Graph<Resource>();
+    static ConnectivityInspector<Resource, Void> loadSubclassGraph() {
+        org.jgrapht.Graph<Resource, Void> result =
+                new org.jgrapht.graph.DefaultDirectedGraph<Resource, Void>(Void.class);
         Model model = GlobalRDFLoader.read("/org/boiler/subclasses.ttl");
         Property predicate = ResourceFactory.createProperty(
                 "http://www.w3.org/2000/01/rdf-schema#subClassOf");
@@ -39,7 +40,7 @@ public class SubclassRelationLoader {
             // Let conversion exception on incorrect data
             result.addEdge(st.getSubject(), (Resource)st.getObject());
         }
-        return result;
+        return new ConnectivityInspector<Resource, Void>(result);
     }
 
 }

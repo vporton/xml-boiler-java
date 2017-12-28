@@ -42,8 +42,8 @@ import org.boiler.rdf_format.asset.Asset.ValidatorKindEnum;
 import org.boiler.rdf_format.Base;
 import org.boiler.rdf_recursive_descent.NodeParser;
 import org.boiler.rdf_format.asset.Asset;
-import org.boiler.graph.AbstractGraph;
 import static org.boiler.rdf_format.Base.MAIN_NAMESPACE;
+import org.jgrapht.alg.ConnectivityInspector;
 
 /**
  *
@@ -51,7 +51,7 @@ import static org.boiler.rdf_format.Base.MAIN_NAMESPACE;
  */
 public class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
 
-    private final AbstractGraph<Resource> subclasses;
+    private final ConnectivityInspector<Resource, Void> subclasses;
 
     private final Asset.ScriptKindEnum scriptKind;
 
@@ -61,8 +61,8 @@ public class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
 //        ScriptInfoParser create(Asset.ScriptKindEnum scriptKind);
 //    }
 
-    public ScriptInfoParser(AbstractGraph<Resource> subclasses,
-                             Asset.ScriptKindEnum scriptKind) {
+    public ScriptInfoParser(ConnectivityInspector<Resource, Void> subclasses,
+                            Asset.ScriptKindEnum scriptKind) {
         this.subclasses = subclasses;
         this.scriptKind = scriptKind;
     }
@@ -172,11 +172,12 @@ public class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
 
     private static class CommandScriptInfoParser extends MyBaseParser {
 
-        private final AbstractGraph<Resource> subclasses;
+        private final ConnectivityInspector<Resource, Void> subclasses;
 
         private final Asset.ScriptKindEnum scriptKind;
 
-        CommandScriptInfoParser(AbstractGraph<Resource> subclasses, Asset.ScriptKindEnum scriptKind) {
+        CommandScriptInfoParser(ConnectivityInspector<Resource, Void> subclasses,
+                                Asset.ScriptKindEnum scriptKind) {
             this.subclasses = subclasses;
             this.scriptKind = scriptKind;
         }
@@ -235,11 +236,12 @@ public class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
 
     private static class WebServiceScriptInfoParser extends MyBaseParser {
 
-        private final AbstractGraph<Resource> subclasses;
+        private final ConnectivityInspector<Resource, Void> subclasses;
 
         private final Asset.ScriptKindEnum scriptKind;
 
-        WebServiceScriptInfoParser(AbstractGraph<Resource> subclasses, Asset.ScriptKindEnum scriptKind) {
+        WebServiceScriptInfoParser(ConnectivityInspector<Resource, Void> subclasses,
+                                   Asset.ScriptKindEnum scriptKind) {
             this.subclasses = subclasses;
             this.scriptKind = scriptKind;
         }

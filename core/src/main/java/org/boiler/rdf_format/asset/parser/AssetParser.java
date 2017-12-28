@@ -33,13 +33,13 @@ import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import static org.apache.jena.vocabulary.RDFS.seeAlso;
-import org.boiler.graph.AbstractGraph;
 import org.boiler.rdf_format.asset.Asset;
 import org.boiler.rdf_recursive_descent.type.ClassForestParser;
 import static org.boiler.rdf_format.Base.MAIN_NAMESPACE;
 import org.boiler.rdf_recursive_descent.ErrorHandler;
 import org.boiler.rdf_recursive_descent.FatalParseError;
 import org.boiler.rdf_recursive_descent.ParseContext;
+import org.jgrapht.alg.ConnectivityInspector;
 
 /**
  *
@@ -47,9 +47,9 @@ import org.boiler.rdf_recursive_descent.ParseContext;
  */
 public class AssetParser {
 
-    private AbstractGraph<Resource> subclasses;
+    private ConnectivityInspector<Resource, Void>subclasses;
 
-    private AssetParser(@Named("subclasses") AbstractGraph<Resource> subclasses) {
+    private AssetParser(@Named("subclasses") ConnectivityInspector<Resource, Void> subclasses) {
         this.subclasses = subclasses;
     }
 

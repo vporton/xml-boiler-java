@@ -25,7 +25,6 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property;
-import org.boiler.graph.AbstractGraph;
 import org.boiler.rdf_format.asset.Asset;
 import org.boiler.rdf_recursive_descent.ErrorHandler;
 import org.boiler.rdf_recursive_descent.NodeParser;
@@ -41,6 +40,7 @@ import static org.boiler.rdf_format.Base.MAIN_NAMESPACE;
 import org.boiler.rdf_recursive_descent.PredicateParser;
 import org.boiler.rdf_recursive_descent.literal.IRILiteral;
 import org.boiler.rdf_recursive_descent.literal.BooleanLiteral;
+import org.jgrapht.alg.ConnectivityInspector;
 
 /**
  *
@@ -48,9 +48,9 @@ import org.boiler.rdf_recursive_descent.literal.BooleanLiteral;
  */
 public class TransformerParser extends NodeParser<Asset.Transformer> {
 
-    private final AbstractGraph<Resource> subclasses;
+    private final ConnectivityInspector<Resource, Void> subclasses;
 
-    public TransformerParser(AbstractGraph<Resource> subclasses) {
+    public TransformerParser(ConnectivityInspector<Resource, Void> subclasses) {
         this.subclasses = subclasses;
     }
 
