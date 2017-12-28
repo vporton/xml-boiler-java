@@ -33,10 +33,13 @@ public class SubclassRelation extends ConnectivityInspector<Resource, Void> {
         super(base);
     }
 
-    public static org.boiler.SubclassRelation loadSubclassGraph() {
+    // TODO: http://jgrapht.org/javadoc/org/jgrapht/alg/ConnectivityInspector.html
+    // says "The inspected graph is specified at construction time and cannot be modified."
+    // It is inefficient as we may add new precedences to the inspected graph
+    // multiple times.
+    public static org.boiler.SubclassRelation calculateSubclassGraph(Model model) {
         org.jgrapht.Graph<Resource, Void> result =
                 new org.jgrapht.graph.DefaultDirectedGraph<Resource, Void>(Void.class);
-        Model model = GlobalRDFLoader.read("/org/boiler/subclasses.ttl");
         StmtIterator iter = model.listStatements(null,
                                                  org.apache.jena.vocabulary.RDFS.subClassOf,
                                                  (RDFNode)null);
@@ -46,6 +49,11 @@ public class SubclassRelation extends ConnectivityInspector<Resource, Void> {
             result.addEdge(st.getSubject(), (Resource)st.getObject());
         }
         return new org.boiler.SubclassRelation(result);
+    }
+
+    public static org.boiler.SubclassRelation loadSubclassGraph() {
+        Model model = GlobalRDFLoader.read("/org/boiler/subclasses.ttl");
+        return calculateSubclassGraph(model);
     }
 
 }
