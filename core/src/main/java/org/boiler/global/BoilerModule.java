@@ -19,6 +19,7 @@
  */
 package org.boiler.global;
 
+import org.boiler.SubclassRelation;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
@@ -41,8 +42,8 @@ public class BoilerModule extends AbstractModule {
     }
 
     @Provides @Named("subclasses") @Singleton
-    org.jgrapht.alg.ConnectivityInspector<Resource, Void> provideSubclassesGraph() {
-        return SubclassRelationLoader.loadSubclassGraph();
+    org.boiler.SubclassRelation provideSubclassesGraph() {
+        return SubclassRelation.loadSubclassGraph();
     }
 
 }

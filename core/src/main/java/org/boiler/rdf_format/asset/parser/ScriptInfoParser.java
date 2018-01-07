@@ -51,7 +51,7 @@ import org.jgrapht.alg.ConnectivityInspector;
  */
 public class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
 
-    private final ConnectivityInspector<Resource, Void> subclasses;
+    private final org.boiler.SubclassRelation subclasses;
 
     private final Asset.ScriptKindEnum scriptKind;
 
@@ -61,7 +61,7 @@ public class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
 //        ScriptInfoParser create(Asset.ScriptKindEnum scriptKind);
 //    }
 
-    public ScriptInfoParser(ConnectivityInspector<Resource, Void> subclasses,
+    public ScriptInfoParser(org.boiler.SubclassRelation subclasses,
                             Asset.ScriptKindEnum scriptKind) {
         this.subclasses = subclasses;
         this.scriptKind = scriptKind;
@@ -172,11 +172,11 @@ public class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
 
     private static class CommandScriptInfoParser extends MyBaseParser {
 
-        private final ConnectivityInspector<Resource, Void> subclasses;
+        private final org.boiler.SubclassRelation subclasses;
 
         private final Asset.ScriptKindEnum scriptKind;
 
-        CommandScriptInfoParser(ConnectivityInspector<Resource, Void> subclasses,
+        CommandScriptInfoParser(org.boiler.SubclassRelation subclasses,
                                 Asset.ScriptKindEnum scriptKind) {
             this.subclasses = subclasses;
             this.scriptKind = scriptKind;
@@ -236,11 +236,11 @@ public class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
 
     private static class WebServiceScriptInfoParser extends MyBaseParser {
 
-        private final ConnectivityInspector<Resource, Void> subclasses;
+        private final org.boiler.SubclassRelation subclasses;
 
         private final Asset.ScriptKindEnum scriptKind;
 
-        WebServiceScriptInfoParser(ConnectivityInspector<Resource, Void> subclasses,
+        WebServiceScriptInfoParser(org.boiler.SubclassRelation subclasses,
                                    Asset.ScriptKindEnum scriptKind) {
             this.subclasses = subclasses;
             this.scriptKind = scriptKind;

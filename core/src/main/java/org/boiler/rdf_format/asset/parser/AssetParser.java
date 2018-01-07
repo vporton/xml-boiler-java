@@ -47,9 +47,9 @@ import org.jgrapht.alg.ConnectivityInspector;
  */
 public class AssetParser {
 
-    private ConnectivityInspector<Resource, Void>subclasses;
+    private org.boiler.SubclassRelation subclasses;
 
-    private AssetParser(@Named("subclasses") ConnectivityInspector<Resource, Void> subclasses) {
+    private AssetParser(@Named("subclasses") org.boiler.SubclassRelation subclasses) {
         this.subclasses = subclasses;
     }
 

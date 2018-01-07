@@ -48,9 +48,9 @@ import org.jgrapht.alg.ConnectivityInspector;
  */
 public class TransformerParser extends NodeParser<Asset.Transformer> {
 
-    private final ConnectivityInspector<Resource, Void> subclasses;
+    private final org.boiler.SubclassRelation subclasses;
 
-    public TransformerParser(ConnectivityInspector<Resource, Void> subclasses) {
+    public TransformerParser(org.boiler.SubclassRelation subclasses) {
         this.subclasses = subclasses;
     }
 

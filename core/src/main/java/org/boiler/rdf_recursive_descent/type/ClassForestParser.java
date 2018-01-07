@@ -37,11 +37,11 @@ public class ClassForestParser<T> {
 
     final Resource klass;
 
-    final ConnectivityInspector<Resource, Void> subclassesGraph;
+    final org.boiler.SubclassRelation subclassesGraph;
 
     public ClassForestParser(NodeParser<T> nodeParser,
                              Resource klass,
-                             ConnectivityInspector<Resource, Void> subclassesGraph)
+                             org.boiler.SubclassRelation subclassesGraph)
     {
         this.nodeParser = nodeParser;
         this.klass = klass;

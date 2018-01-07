@@ -34,7 +34,7 @@ import org.jgrapht.alg.ConnectivityInspector;
  */
 public class CheckNodeClass {
 
-    public static boolean check(ConnectivityInspector<Resource, Void> graph,
+    public static boolean check(org.boiler.SubclassRelation graph,
                                 ParseContext context,
                                 org.apache.jena.rdf.model.Model model,
                                 org.apache.jena.rdf.model.Resource node,
