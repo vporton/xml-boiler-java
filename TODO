@@ -1,3 +1,5 @@
+Void -> DefaultEdge
+
 https://github.com/google/guice/wiki/GettingStarted with @Inject and @Singleton
 - or Spring?
 
