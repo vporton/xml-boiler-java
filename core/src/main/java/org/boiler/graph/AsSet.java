@@ -19,29 +19,32 @@
  */
 package org.boiler.graph;
 
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  *
  * @author Victor Porton
  */
-public class Composition {
+public class AsSet {
 
-    /*
-     * Note order of arguments!
-     */
-    public static <T> Graph<T> compose(Graph<T> b, Graph<T> a) {
-        Graph<T> result = new Graph<T>();
-        for(Entry<T, HashSet<T>> e: a.adj.entrySet()) {
-            T x = e.getKey();
-            for(T y : e.getValue()) {
-                HashSet<T> e2 = b.adj.get(y);
-                if(e2 != null)
-                    for(T z : e2) result.addEdge(x, z);
+    public static <T> Graph<T> union(Graph<T> a, Graph<T> b) {
+        Set<T> source = new HashSet<>();
+        source.addAll(a.adj.keySet());
+        source.addAll(b.adj.keySet());
+        HashMap<T, HashSet<T>> adj = new HashMap<>();
+        for(T x : source) {
+            Set<T> setA = a.adj.get(x);
+            Set<T> setB = a.adj.get(x);
+            if(!setA.isEmpty() || !setB.isEmpty()) {
+                HashSet<T> set = new HashSet<>();
+                if(!setA.isEmpty()) set.addAll(setA);
+                if(!setB.isEmpty()) set.addAll(setB);
+                adj.put(x, set);
             }
         }
-        return result;
+        return new Graph<T>(adj);
     }
 
 }

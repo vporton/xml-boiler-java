@@ -33,7 +33,7 @@ public class Graph<T> implements AbstractGraph<T> {
     // In fact we have no duplicating entries. So we could use a faster type
     HashMap<T, HashSet<T>> adj;
 
-    private Graph(HashMap<T, HashSet<T>> adj) {
+    Graph(HashMap<T, HashSet<T>> adj) {
         this.adj = adj;
     }
 
