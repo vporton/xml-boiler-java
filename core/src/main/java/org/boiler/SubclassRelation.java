@@ -29,7 +29,7 @@ import org.boiler.graph.*;
  */
 public class SubclassRelation extends org.boiler.graph.Connectivity<Resource> {
 
-    private SubclassRelation(Model model) {
+    public SubclassRelation(Model model) {
         addModel(model);
     }
 

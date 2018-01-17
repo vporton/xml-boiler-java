@@ -29,7 +29,7 @@ public class Connectivity<T> {
 
     public Connectivity() { }
 
-    private Connectivity(Graph<T> graph) {
+    public Connectivity(Graph<T> graph) {
         addGraph(graph);
     }
 
