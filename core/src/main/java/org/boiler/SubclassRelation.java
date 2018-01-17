@@ -46,7 +46,7 @@ public class SubclassRelation extends org.boiler.graph.Connectivity<Resource> {
         addGraph(result);
     }
 
-    public static org.boiler.SubclassRelation loadSubclassGraph() {
+    public static org.boiler.SubclassRelation loadHardcodedSubclasses() {
         Model model = GlobalRDFLoader.read("/org/boiler/subclasses.ttl");
         return new SubclassRelation(model);
     }
