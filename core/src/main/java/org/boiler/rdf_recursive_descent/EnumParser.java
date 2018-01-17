@@ -43,8 +43,7 @@ public class EnumParser<T extends Enum<T>> extends NodeParserWithError<T> {
           org.apache.jena.rdf.model.Resource node)
             throws FatalParseError
     {
-        // FIXME: What to do if node.isBlank()?
-        if(!node.isResource()) {
+        if(!node.isURIResource()) {
             org.boiler.util.StringCreator msg =
                 () -> java.text.MessageFormat.format(
                         context.getLocalized("ShouldBeIRI_error"),
