@@ -45,7 +45,7 @@ public class CheckNodeClass {
         final NodeIterator iter = model.listObjectsOfProperty(node, property);
         while(iter.hasNext()) {
             final RDFNode klass2 = iter.next();
-            if(klass2.isResource() && graph.getConnectivity().adjanced(klass2.asResource(), klass))
+            if(klass2.isResource() && graph.isConnected(klass2.asResource(), klass))
                 return true;
         }
         final java.util.logging.Logger logger = context.getLogger();

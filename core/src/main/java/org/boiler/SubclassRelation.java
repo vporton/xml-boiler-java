@@ -27,26 +27,10 @@ import org.boiler.graph.*;
  *
  * @author Victor Porton
  */
-public class SubclassRelation {
-
-    private Graph<Resource> connectivity = new Graph<Resource>();
-
-    public SubclassRelation() { }
-
-    private SubclassRelation(Graph<Resource> graph) {
-        addGraph(graph);
-    }
+public class SubclassRelation extends org.boiler.graph.Connectivity<Resource> {
 
     private SubclassRelation(Model model) {
         addModel(model);
-    }
-
-    public Graph<Resource> getConnectivity() {
-        return connectivity;
-    }
-
-    public void addGraph(Graph<Resource> graph) {
-        connectivity = TransitiveClosure.transitiveClosure(AsSet.union(connectivity, graph));
     }
 
     public void addModel(Model model) {
