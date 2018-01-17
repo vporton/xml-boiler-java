@@ -21,6 +21,7 @@ package org.boiler.graph;
 
 import java.util.HashSet;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 /**
  * Directed graph. Used to check connectivity between two vertices.
@@ -72,6 +73,14 @@ public class Graph<T> implements AbstractGraph<T> {
         HashSet<T> set = adj.get(from);
         if(set == null) return false;
         return set.contains(to);
+    }
+
+    Graph<T> reverse() {
+        Graph<T> result = new Graph<T>();
+        for(Entry<T, HashSet<T>> e: adj.entrySet())
+            for(T y : e.getValue())
+                result.addEdge(y, e.getKey());
+        return result;
     }
 
     // I use depth first search (TODO: probably should cache results)
