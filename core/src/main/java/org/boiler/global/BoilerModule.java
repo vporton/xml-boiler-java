@@ -40,7 +40,7 @@ public class BoilerModule extends AbstractModule {
 //            .build(ScriptInfoParser.Factory.class));
     }
 
-    @Provides @Named("subclasses") @Singleton
+    @Provides @Named("hardcodedSubclasses") @Singleton
     org.boiler.SubclassRelation provideSubclassesGraph() {
         return org.boiler.SubclassRelation.loadSubclassGraph();
     }
