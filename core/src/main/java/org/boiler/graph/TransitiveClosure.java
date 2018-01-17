@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2018 Victor Porton,
+ *  Copyright (c) 2017 Victor Porton,
  *  XML Boiler - http://freesoft.portonvictor.org
  *
  *  This file is part of XML Boiler.
@@ -19,33 +19,20 @@
  */
 package org.boiler.graph;
 
-import java.util.HashSet;
-import java.util.Map.Entry;
+import static org.boiler.graph.Composition.square;
 
 /**
  *
  * @author Victor Porton
  */
-public class Composition {
+public class TransitiveClosure {
 
-    /*
-     * Note order of arguments!
-     */
-    public static<T> Graph<T> compose(Graph<T> b, Graph<T> a) {
-        Graph<T> result = new Graph<T>();
-        for(Entry<T, HashSet<T>> e: a.adj.entrySet()) {
-            T x = e.getKey();
-            for(T y : e.getValue()) {
-                HashSet<T> e2 = b.adj.get(y);
-                if(e2 != null)
-                    for(T z : e2) result.addEdge(x, z);
-            }
+    public static<T> Graph<T> transitiveClosure(Graph<T> graph) {
+        for(;;) {
+            Graph<T> result = AsSet.union(graph, square(graph));
+            if(result.equals(graph)) return result;
+            graph = result;
         }
-        return result;
-    }
-
-    public static<T> Graph<T> square(Graph<T> graph) {
-        return compose(graph, graph);
     }
 
 }
