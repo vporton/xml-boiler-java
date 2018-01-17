@@ -40,7 +40,6 @@ import static org.boiler.rdf_format.Base.MAIN_NAMESPACE;
 import org.boiler.rdf_recursive_descent.PredicateParser;
 import org.boiler.rdf_recursive_descent.literal.IRILiteral;
 import org.boiler.rdf_recursive_descent.literal.BooleanLiteral;
-import org.jgrapht.alg.ConnectivityInspector;
 
 /**
  *

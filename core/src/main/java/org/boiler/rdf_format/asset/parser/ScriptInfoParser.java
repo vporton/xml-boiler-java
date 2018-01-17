@@ -43,7 +43,6 @@ import org.boiler.rdf_format.Base;
 import org.boiler.rdf_recursive_descent.NodeParser;
 import org.boiler.rdf_format.asset.Asset;
 import static org.boiler.rdf_format.Base.MAIN_NAMESPACE;
-import org.jgrapht.alg.ConnectivityInspector;
 
 /**
  *

@@ -25,7 +25,6 @@ import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.rdf.model.RDFNode;
 import org.boiler.rdf_recursive_descent.*;
-import org.jgrapht.alg.ConnectivityInspector;
 
 /**
  *
@@ -61,7 +60,8 @@ public class ClassForestParser<T> {
         while(iter.hasNext()) {
             final Statement st = iter.next();
             final RDFNode nodeClass = st.getObject();
-            if(nodeClass.isResource() && subclassesGraph.pathExists(nodeClass.asResource(), klass)) {
+            if(nodeClass.isResource() &&
+                    subclassesGraph.getConnectivity().adjanced(nodeClass.asResource(), klass)) {
                 final Resource node = st.getSubject();
                 ParseResult<? extends T> subResult = nodeParser.parse(context, model, node);
                 if(subResult.getSuccess()) result.add(subResult.getResult());

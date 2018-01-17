@@ -19,27 +19,38 @@
  */
 package org.boiler;
 
-import org.jgrapht.alg.ConnectivityInspector;
 import org.apache.jena.rdf.model.*;
 import org.boiler.global.GlobalRDFLoader;
+import org.boiler.graph.*;
 
 /**
  *
  * @author Victor Porton
  */
-public class SubclassRelation extends ConnectivityInspector<Resource, Void> {
+public class SubclassRelation {
 
-    private SubclassRelation(org.jgrapht.Graph<Resource, Void> base) {
-        super(base);
+    private Graph<Resource> connectivity = new Graph<Resource>();
+
+    public SubclassRelation() { }
+
+    private SubclassRelation(Graph<Resource> graph) {
+        addGraph(graph);
     }
 
-    // TODO: http://jgrapht.org/javadoc/org/jgrapht/alg/ConnectivityInspector.html
-    // says "The inspected graph is specified at construction time and cannot be modified."
-    // It is inefficient as we may add new precedences to the inspected graph
-    // multiple times.
-    public static org.boiler.SubclassRelation calculateSubclassGraph(Model model) {
-        org.jgrapht.Graph<Resource, Void> result =
-                new org.jgrapht.graph.DefaultDirectedGraph<Resource, Void>(Void.class);
+    private SubclassRelation(Model model) {
+        addModel(model);
+    }
+
+    public Graph<Resource> getConnectivity() {
+        return connectivity;
+    }
+
+    public void addGraph(Graph<Resource> graph) {
+        connectivity = TransitiveClosure.transitiveClosure(AsSet.union(connectivity, graph));
+    }
+
+    public void addModel(Model model) {
+        Graph<Resource> result = new Graph<Resource>();
         StmtIterator iter = model.listStatements(null,
                                                  org.apache.jena.vocabulary.RDFS.subClassOf,
                                                  (RDFNode)null);
@@ -48,12 +59,12 @@ public class SubclassRelation extends ConnectivityInspector<Resource, Void> {
             // FIXME: conversion exception on incorrect data
             result.addEdge(st.getSubject(), (Resource)st.getObject());
         }
-        return new org.boiler.SubclassRelation(result);
+        addGraph(result);
     }
 
     public static org.boiler.SubclassRelation loadSubclassGraph() {
         Model model = GlobalRDFLoader.read("/org/boiler/subclasses.ttl");
-        return calculateSubclassGraph(model);
+        return new SubclassRelation(model);
     }
 
 }

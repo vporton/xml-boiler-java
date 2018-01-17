@@ -26,7 +26,6 @@ import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.boiler.rdf_recursive_descent.*;
-import org.jgrapht.alg.ConnectivityInspector;
 
 /**
  *
@@ -46,7 +45,7 @@ public class CheckNodeClass {
         final NodeIterator iter = model.listObjectsOfProperty(node, property);
         while(iter.hasNext()) {
             final RDFNode klass2 = iter.next();
-            if(klass2.isResource() && graph.pathExists(klass2.asResource(), klass))
+            if(klass2.isResource() && graph.getConnectivity().adjanced(klass2.asResource(), klass))
                 return true;
         }
         final java.util.logging.Logger logger = context.getLogger();

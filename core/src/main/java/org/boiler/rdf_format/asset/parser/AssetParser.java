@@ -39,7 +39,6 @@ import static org.boiler.rdf_format.Base.MAIN_NAMESPACE;
 import org.boiler.rdf_recursive_descent.ErrorHandler;
 import org.boiler.rdf_recursive_descent.FatalParseError;
 import org.boiler.rdf_recursive_descent.ParseContext;
-import org.jgrapht.alg.ConnectivityInspector;
 
 /**
  *

@@ -49,7 +49,7 @@ public class Graph<T> implements AbstractGraph<T> {
     @Override
     public boolean equals(Object obj) {
         if(!(obj instanceof Graph)) return false;
-        return adj.equals(((Graph<T>)obj).adj);
+        return adj.equals(((Graph<?>)obj).adj);
     }
 
     @Override
