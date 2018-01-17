@@ -48,7 +48,8 @@ public class AssetParser {
 
     private org.boiler.SubclassRelation subclasses;
 
-    private AssetParser(@Named("hardcodedSubclasses") org.boiler.SubclassRelation subclasses) {
+    @Inject
+    private AssetParser(org.boiler.HardcodedSubclasses subclasses) {
         this.subclasses = subclasses;
     }
 

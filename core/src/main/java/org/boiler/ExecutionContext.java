@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2017 Victor Porton,
+ *  Copyright (c) 2018 Victor Porton,
  *  XML Boiler - http://freesoft.portonvictor.org
  *
  *  This file is part of XML Boiler.
@@ -17,28 +17,43 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.boiler.global;
+package org.boiler;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
-import com.google.inject.Singleton;
-import com.google.inject.name.Named;
-import com.google.inject.assistedinject.FactoryModuleBuilder;
-import org.apache.jena.rdf.model.Resource;
-import org.boiler.rdf_format.asset.parser.ScriptInfoParser;
+import java.util.logging.Logger;
+import java.util.Locale;
 
 /**
  *
  * @author Victor Porton
  */
-public class BoilerModule extends AbstractModule {
+public class ExecutionContext {
 
-    @Override
-    protected void configure() {
-        bind(org.boiler.ExecutionContext.class);
-        bind(org.boiler.HardcodedSubclasses.class);
-//        install(new FactoryModuleBuilder()
-//            .build(ScriptInfoParser.Factory.class));
+    private Logger logger;
+
+    private java.util.ResourceBundle messages;
+
+    public ExecutionContext() {
+        this(Locale.getDefault());
+    }
+
+    public ExecutionContext(java.util.Locale locale) {
+        messages = java.util.ResourceBundle.getBundle("org.boiler.Messages", locale);
+    }
+
+    public Logger getLogger() {
+        return logger;
+    }
+
+    public void setLogger(Logger logger) {
+        this.logger = logger;
+    }
+
+    public java.util.ResourceBundle getMessages() {
+        return messages;
+    }
+
+    public String getLocalized(String str) {
+        return messages.getString(str);
     }
 
 }

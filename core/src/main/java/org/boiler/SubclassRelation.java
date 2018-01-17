@@ -19,8 +19,9 @@
  */
 package org.boiler;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.jena.rdf.model.*;
-import org.boiler.global.GlobalRDFLoader;
 import org.boiler.graph.*;
 
 /**
@@ -29,26 +30,41 @@ import org.boiler.graph.*;
  */
 public class SubclassRelation extends org.boiler.graph.Connectivity<Resource> {
 
-    public SubclassRelation(Model model) {
+    private ExecutionContext context;
+
+    public SubclassRelation(ExecutionContext context) {
+        this.context = context;
+    }
+
+    public SubclassRelation(ExecutionContext context, Model model) {
+        this.context = context;
         addModel(model);
     }
 
-    public void addModel(Model model) {
+    /*
+     * Return false if there were errors.
+     */
+    public boolean addModel(Model model) {
         Graph<Resource> result = new Graph<Resource>();
         StmtIterator iter = model.listStatements(null,
                                                  org.apache.jena.vocabulary.RDFS.subClassOf,
                                                  (RDFNode)null);
+        boolean wereErrors = false;
         while(iter.hasNext()) {
             Statement st = iter.next();
-            // FIXME: conversion exception on incorrect data
-            result.addEdge(st.getSubject(), (Resource)st.getObject());
+            if(st.getObject().isURIResource())
+                result.addEdge(st.getSubject(), (Resource)st.getObject());
+            else {
+                wereErrors = true;
+                context.getLogger().log(
+                        Level.WARNING,
+                        java.text.MessageFormat.format(
+                            context.getLocalized("ShouldBeIRI_error"),
+                            st.getObject()));
+            }
         }
         addGraph(result);
-    }
-
-    public static org.boiler.SubclassRelation loadHardcodedSubclasses() {
-        Model model = GlobalRDFLoader.read("/org/boiler/subclasses.ttl");
-        return new SubclassRelation(model);
+        return !wereErrors;
     }
 
 }

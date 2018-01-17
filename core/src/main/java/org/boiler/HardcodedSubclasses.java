@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2017 Victor Porton,
+ *  Copyright (c) 2018 Victor Porton,
  *  XML Boiler - http://freesoft.portonvictor.org
  *
  *  This file is part of XML Boiler.
@@ -17,28 +17,20 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.boiler.global;
+package org.boiler;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
-import com.google.inject.Singleton;
-import com.google.inject.name.Named;
-import com.google.inject.assistedinject.FactoryModuleBuilder;
-import org.apache.jena.rdf.model.Resource;
-import org.boiler.rdf_format.asset.parser.ScriptInfoParser;
+import com.google.inject.Inject;
+import org.boiler.global.GlobalRDFLoader;
 
 /**
  *
  * @author Victor Porton
  */
-public class BoilerModule extends AbstractModule {
+public class HardcodedSubclasses extends SubclassRelation {
 
-    @Override
-    protected void configure() {
-        bind(org.boiler.ExecutionContext.class);
-        bind(org.boiler.HardcodedSubclasses.class);
-//        install(new FactoryModuleBuilder()
-//            .build(ScriptInfoParser.Factory.class));
+    @Inject
+    public HardcodedSubclasses(ExecutionContext context) {
+        super(context, GlobalRDFLoader.read("/org/boiler/subclasses.ttl"));
     }
 
 }

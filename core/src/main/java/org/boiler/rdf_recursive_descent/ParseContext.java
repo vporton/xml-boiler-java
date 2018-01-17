@@ -19,43 +19,13 @@
  */
 package org.boiler.rdf_recursive_descent;
 
-import java.util.logging.Logger;
 import java.util.logging.Level;
-import java.util.Locale;
 
 /**
  *
  * @author Victor Porton
  */
-public class ParseContext {
-
-    private Logger logger;
-
-    private java.util.ResourceBundle messages;
-
-    public ParseContext() {
-        this(Locale.getDefault());
-    }
-
-    public ParseContext(java.util.Locale locale) {
-        messages = java.util.ResourceBundle.getBundle("org.boiler.Messages", locale);
-    }
-
-    public Logger getLogger() {
-        return logger;
-    }
-
-    public void setLogger(Logger logger) {
-        this.logger = logger;
-    }
-
-    public java.util.ResourceBundle getMessages() {
-        return messages;
-    }
-
-    public String getLocalized(String str) {
-        return messages.getString(str);
-    }
+public class ParseContext extends org.boiler.ExecutionContext {
 
     // TODO: Move this to the Enum?
     public <T> ParseResult<T>
@@ -65,13 +35,13 @@ public class ParseContext {
             case IGNORE:
                 return new ParseResult<T>();
             case WARNING:
-                if(logger != null)
-                    logger.log(Level.WARNING, str.create());
+                if(getLogger() != null)
+                    getLogger().log(Level.WARNING, str.create());
                 return new ParseResult<T>();
             case FATAL:
                 final String message = str.create();
-                if(logger != null)
-                    logger.log(Level.SEVERE, message);
+                if(getLogger() != null)
+                    getLogger().log(Level.SEVERE, message);
                 throw new FatalParseError(message);
         }
         return null; // avoid "missing return statement" warning
