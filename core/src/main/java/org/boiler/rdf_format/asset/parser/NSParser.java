@@ -52,7 +52,7 @@ public class NSParser extends NodeParser<Asset.Namespace> {
 
         Property scriptProperty = ResourceFactory.createProperty(MAIN_NAMESPACE + "script");
         NodeParser<Asset.ScriptInfo> scriptNodeParser =
-                new ScriptInfoParser(subclasses, Asset.ScriptKindEnum.TRANSFORMER);
+                new ScriptInfoParser(subclasses, Asset.ScriptKindEnum.VALIDATOR);
         OneOrMorePredicate<Asset.ScriptInfo> scriptParser =
                 new OneOrMorePredicate<>(scriptProperty, scriptNodeParser, ErrorHandler.WARNING);
         result.validators = scriptParser.parse(context, model, node).getResult();
