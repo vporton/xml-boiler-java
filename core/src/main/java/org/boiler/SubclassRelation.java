@@ -41,6 +41,10 @@ public class SubclassRelation extends org.boiler.graph.Connectivity<Resource> {
         addModel(model);
     }
 
+    public ExecutionContext getContext() {
+        return context;
+    }
+
     /*
      * Return false if there were errors.
      *
