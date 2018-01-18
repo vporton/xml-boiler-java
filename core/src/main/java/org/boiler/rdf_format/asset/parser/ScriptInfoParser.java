@@ -50,7 +50,7 @@ import static org.boiler.rdf_format.Base.MAIN_NAMESPACE;
  */
 public class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
 
-    private final org.boiler.SubclassRelation subclasses;
+    private final org.boiler.rdf_base.SubclassRelation subclasses;
 
     private final Asset.ScriptKindEnum scriptKind;
 
@@ -60,7 +60,7 @@ public class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
 //        ScriptInfoParser create(Asset.ScriptKindEnum scriptKind);
 //    }
 
-    public ScriptInfoParser(org.boiler.SubclassRelation subclasses,
+    public ScriptInfoParser(org.boiler.rdf_base.SubclassRelation subclasses,
                             Asset.ScriptKindEnum scriptKind) {
         this.subclasses = subclasses;
         this.scriptKind = scriptKind;
@@ -171,11 +171,11 @@ public class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
 
     private static class CommandScriptInfoParser extends MyBaseParser {
 
-        private final org.boiler.SubclassRelation subclasses;
+        private final org.boiler.rdf_base.SubclassRelation subclasses;
 
         private final Asset.ScriptKindEnum scriptKind;
 
-        CommandScriptInfoParser(org.boiler.SubclassRelation subclasses,
+        CommandScriptInfoParser(org.boiler.rdf_base.SubclassRelation subclasses,
                                 Asset.ScriptKindEnum scriptKind) {
             this.subclasses = subclasses;
             this.scriptKind = scriptKind;
@@ -235,11 +235,11 @@ public class ScriptInfoParser extends NodeParser<Asset.ScriptInfo> {
 
     private static class WebServiceScriptInfoParser extends MyBaseParser {
 
-        private final org.boiler.SubclassRelation subclasses;
+        private final org.boiler.rdf_base.SubclassRelation subclasses;
 
         private final Asset.ScriptKindEnum scriptKind;
 
-        WebServiceScriptInfoParser(org.boiler.SubclassRelation subclasses,
+        WebServiceScriptInfoParser(org.boiler.rdf_base.SubclassRelation subclasses,
                                    Asset.ScriptKindEnum scriptKind) {
             this.subclasses = subclasses;
             this.scriptKind = scriptKind;

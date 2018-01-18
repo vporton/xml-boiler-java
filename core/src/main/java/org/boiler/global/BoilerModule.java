@@ -36,7 +36,7 @@ public class BoilerModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(org.boiler.ExecutionContext.class);
-        bind(org.boiler.HardcodedSubclasses.class);
+        bind(org.boiler.rdf_base.HardcodedSubclasses.class);
 //        install(new FactoryModuleBuilder()
 //            .build(ScriptInfoParser.Factory.class));
     }

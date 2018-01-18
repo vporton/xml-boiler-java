@@ -47,9 +47,9 @@ import org.boiler.rdf_recursive_descent.literal.BooleanLiteral;
  */
 public class TransformerParser extends NodeParser<Asset.Transformer> {
 
-    private final org.boiler.SubclassRelation subclasses;
+    private final org.boiler.rdf_base.SubclassRelation subclasses;
 
-    public TransformerParser(org.boiler.SubclassRelation subclasses) {
+    public TransformerParser(org.boiler.rdf_base.SubclassRelation subclasses) {
         this.subclasses = subclasses;
     }
 

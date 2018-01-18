@@ -33,7 +33,7 @@ import org.boiler.rdf_recursive_descent.*;
  */
 public class CheckNodeClass {
 
-    public static boolean check(org.boiler.SubclassRelation graph,
+    public static boolean check(org.boiler.rdf_base.SubclassRelation graph,
                                 ParseContext context,
                                 org.apache.jena.rdf.model.Model model,
                                 org.apache.jena.rdf.model.Resource node,
