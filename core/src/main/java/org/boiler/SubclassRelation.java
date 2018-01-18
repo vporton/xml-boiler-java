@@ -54,9 +54,13 @@ public class SubclassRelation extends org.boiler.graph.Connectivity<Resource> {
         boolean wereErrors = false;
         while(iter.hasNext()) {
             Statement st = iter.next();
-            if(st.getObject().isURIResource())
-                result.addEdge(st.getSubject(), (Resource)st.getObject());
-            else {
+            Resource subject = st.getSubject();
+            RDFNode object = st.getObject();
+            if(object.isURIResource() &&
+                    checkTypes(subject, (Resource)object))
+            {
+                result.addEdge(subject, (Resource)object);
+            } else {
                 wereErrors = true;
                 context.getLogger().log(
                         Level.WARNING,
@@ -67,6 +71,10 @@ public class SubclassRelation extends org.boiler.graph.Connectivity<Resource> {
         }
         addGraph(result);
         return !wereErrors;
+    }
+
+    protected boolean checkTypes(Resource from, Resource to) {
+        return true;
     }
 
 }
