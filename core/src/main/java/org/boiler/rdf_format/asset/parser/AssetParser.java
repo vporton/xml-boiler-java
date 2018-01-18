@@ -46,7 +46,7 @@ import org.boiler.rdf_recursive_descent.ParseContext;
  */
 public class AssetParser {
 
-    private org.boiler.rdf_base.SubclassRelation subclasses;
+    private final org.boiler.rdf_base.HardcodedSubclasses subclasses;
 
     @Inject
     private AssetParser(org.boiler.rdf_base.HardcodedSubclasses subclasses) {
