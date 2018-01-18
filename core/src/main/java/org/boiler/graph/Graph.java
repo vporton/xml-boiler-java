@@ -83,7 +83,7 @@ public class Graph<T> implements AbstractGraph<T> {
         return result;
     }
 
-// I use depth first search (TODO: probably should cache results)
+// I use depth first search (probably should cache results)
 //    public boolean connected(T from, T to) {
 //        if(from == to) return true;
 //        // discovered is not strictly required because we expect no cycles in our data, but

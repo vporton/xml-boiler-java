@@ -59,11 +59,17 @@ public class AssetParser {
 
         ParseContext context = new ParseContext();
 
-        Resource klass = ResourceFactory.createProperty(MAIN_NAMESPACE + "Transformer");
+        Resource transformerKlass = ResourceFactory.createProperty(MAIN_NAMESPACE + "Transformer");
         ClassForestParser<Asset.Transformer> transformerParser =
                 new ClassForestParser<Asset.Transformer>(
-                        new TransformerParser(subclasses), klass, subclasses);
+                        new TransformerParser(subclasses), transformerKlass, subclasses);
         result.transformers = transformerParser.parse(context, model).getResult();
+
+        Resource nsKlass = ResourceFactory.createProperty(MAIN_NAMESPACE + "Namespace");
+        ClassForestParser<Asset.Namespace> nsParser =
+                new ClassForestParser<Asset.Namespace>(
+                        new NSParser(subclasses), nsKlass, subclasses);
+        result.namespaces = nsParser.parse(context, model).getResult();
 
         result.seeAlsoTransform = scanSeeAlso(context, model, MAIN_NAMESPACE + "transform");
         result.seeAlsoValidate  = scanSeeAlso(context, model, MAIN_NAMESPACE + "validate" );

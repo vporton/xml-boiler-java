@@ -27,7 +27,7 @@ import java.util.logging.Level;
  */
 public class ParseContext extends org.boiler.ExecutionContext {
 
-    // TODO: Move this to the Enum?
+    // Move this to the Enum?
     public <T> ParseResult<T>
         raise(ErrorHandler handler, org.boiler.util.StringCreator str)
                 throws FatalParseError {

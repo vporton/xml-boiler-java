@@ -63,8 +63,6 @@ public class SubclassRelation extends org.boiler.graph.Connectivity<Resource> {
 
     /*
      * Return false if there were errors.
-     *
-     * TODO: Create subclass for considering only resources of certain type.
      */
     public boolean addModel(Model model) {
         Graph<Resource> result = new Graph<Resource>();

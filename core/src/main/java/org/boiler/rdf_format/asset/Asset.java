@@ -88,9 +88,14 @@ public class Asset {
         public List<? extends ScriptInfo> scripts;
     }
 
+    public static class Namespace {
+        public Resource URI;
+        public List<? extends ScriptInfo> validators;
+    }
+
     public static class AssetInfo {
         public List<? extends Transformer> transformers;
-        // TODO: validators
+        public List<? extends Namespace> namespaces;
         public List<Resource> seeAlsoTransform, seeAlsoValidate;
         // TODO: precedences
     }
