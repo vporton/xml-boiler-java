@@ -33,12 +33,27 @@ public class SubclassRelation extends org.boiler.graph.Connectivity<Resource> {
 
     private ExecutionContext context;
 
+    private Property relation;
+
     public SubclassRelation(ExecutionContext context) {
-        this.context = context;
+        this.context  = context;
+        this.relation = org.apache.jena.vocabulary.RDFS.subClassOf;
     }
 
     public SubclassRelation(ExecutionContext context, Model model) {
-        this.context = context;
+        this.context  = context;
+        this.relation = org.apache.jena.vocabulary.RDFS.subClassOf;
+        addModel(model);
+    }
+
+    public SubclassRelation(ExecutionContext context, Property relation) {
+        this.context  = context;
+        this.relation = relation;
+    }
+
+    public SubclassRelation(ExecutionContext context, Model model, Property relation) {
+        this.context  = context;
+        this.relation = relation;
         addModel(model);
     }
 
@@ -54,17 +69,16 @@ public class SubclassRelation extends org.boiler.graph.Connectivity<Resource> {
     public boolean addModel(Model model) {
         Graph<Resource> result = new Graph<Resource>();
         StmtIterator iter = model.listStatements(null,
-                                                 org.apache.jena.vocabulary.RDFS.subClassOf,
+                                                 relation,
                                                  (RDFNode)null);
         boolean wereErrors = false;
         while(iter.hasNext()) {
             Statement st = iter.next();
             Resource subject = st.getSubject();
             RDFNode object = st.getObject();
-            if(object.isURIResource() &&
-                    checkTypes(subject, (Resource)object))
-            {
-                result.addEdge(subject, (Resource)object);
+            if(object.isURIResource()) {
+                if(checkTypes(model, subject, (Resource)object))
+                    result.addEdge(subject, (Resource)object);
             } else {
                 wereErrors = true;
                 context.getLogger().log(
@@ -78,7 +92,7 @@ public class SubclassRelation extends org.boiler.graph.Connectivity<Resource> {
         return !wereErrors;
     }
 
-    protected boolean checkTypes(Resource from, Resource to) {
+    protected boolean checkTypes(Model model, Resource from, Resource to) {
         return true;
     }
 
