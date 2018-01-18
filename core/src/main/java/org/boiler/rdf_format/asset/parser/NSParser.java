@@ -50,7 +50,7 @@ public class NSParser extends NodeParser<Asset.Namespace> {
 
         Asset.Namespace result = new Asset.Namespace();
 
-        Property scriptProperty = ResourceFactory.createProperty(MAIN_NAMESPACE + "script");
+        Property scriptProperty = ResourceFactory.createProperty(MAIN_NAMESPACE + "validator");
         NodeParser<Asset.ScriptInfo> scriptNodeParser =
                 new ScriptInfoParser(subclasses, Asset.ScriptKindEnum.VALIDATOR);
         OneOrMorePredicate<Asset.ScriptInfo> scriptParser =
