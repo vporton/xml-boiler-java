@@ -42,6 +42,8 @@ import static org.boiler.rdf_format.Base.MAIN_NAMESPACE;
 import org.boiler.rdf_recursive_descent.ErrorHandler;
 import org.boiler.rdf_recursive_descent.FatalParseError;
 import org.boiler.rdf_recursive_descent.ParseContext;
+import org.boiler.rdf_recursive_descent.compound.ListCollection;
+import org.boiler.rdf_recursive_descent.literal.IRILiteral;
 
 /**
  *
@@ -93,6 +95,7 @@ public class AssetParser {
         Resource kind = ResourceFactory.createResource(kindURI);
         List<? super Resource> seeAlsoNodes =
                 model.listObjectsOfProperty(kind, seeAlso).toList();
+        // Can be simplified using OnePredicate class
         if(seeAlsoNodes.size() > 1) {
             String str = java.text.MessageFormat.format(
                     context.getLocalized("Asset_multiple_seeAlso"),
@@ -101,29 +104,8 @@ public class AssetParser {
             throw new FatalParseError(str);
         }
         Resource seeAlsoHead = (Resource)seeAlsoNodes.get(0);
-        // TODO: Separate the below into a special class
-        RDFList list = seeAlsoHead.as(RDFList.class);
-        if(!list.isValid()) {
-            String str = java.text.MessageFormat.format(
-                    context.getLocalized("RDFListError"),
-                    seeAlsoHead);
-            context.getLogger().log(Level.SEVERE, str);
-            throw new FatalParseError(str);
-        }
-        Iterator<RDFNode> iter = list.iterator();
-        ArrayList<Resource> result = new ArrayList<Resource>();
-        while(iter.hasNext()) {
-            RDFNode subnode = iter.next();
-            if(!subnode.isURIResource()) {
-                String str = java.text.MessageFormat.format(
-                        context.getLocalized("seeAlsoResource"),
-                        seeAlsoHead);
-                context.getLogger().log(Level.SEVERE, str);
-                throw new FatalParseError(str);
-            }
-            result.add((Resource)subnode);
-        }
-        return result;
+        ListCollection<Resource> parser = new ListCollection<>(new IRILiteral());
+        return parser.parse(context, model, seeAlsoHead).getResult();
     }
 
 }

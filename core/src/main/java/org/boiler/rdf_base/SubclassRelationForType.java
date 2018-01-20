@@ -26,8 +26,6 @@ import org.apache.jena.rdf.model.Resource;
 import org.boiler.ExecutionContext;
 
 /**
- * TODO: Use this class to read precedences info.
- *
  * @author Victor Porton
  */
 public class SubclassRelationForType extends SubclassRelation {
