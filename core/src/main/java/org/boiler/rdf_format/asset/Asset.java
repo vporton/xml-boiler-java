@@ -22,6 +22,8 @@ package org.boiler.rdf_format.asset;
 import java.util.AbstractSet;
 import java.util.List;
 import org.apache.jena.rdf.model.Resource;
+import org.boiler.graph.Connectivity;
+import org.boiler.graph.Graph;
 
 /**
  *
@@ -97,7 +99,8 @@ public class Asset {
         public List<? extends Transformer> transformers;
         public List<? extends Namespace> namespaces;
         public List<Resource> seeAlsoTransform, seeAlsoValidate;
-        // TODO: precedences
+        public Connectivity<Resource> precedencesSubclasses;
+        public Connectivity<Resource> precedencesHigher;
     }
 
 }

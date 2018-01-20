@@ -33,6 +33,9 @@ import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import static org.apache.jena.vocabulary.RDFS.seeAlso;
+import org.boiler.ExecutionContext;
+import org.boiler.rdf_base.SubclassRelation;
+import org.boiler.rdf_base.SubclassRelationForType;
 import org.boiler.rdf_format.asset.Asset;
 import org.boiler.rdf_recursive_descent.type.ClassForestParser;
 import static org.boiler.rdf_format.Base.MAIN_NAMESPACE;
@@ -73,6 +76,13 @@ public class AssetParser {
 
         result.seeAlsoTransform = scanSeeAlso(context, model, MAIN_NAMESPACE + "transform");
         result.seeAlsoValidate  = scanSeeAlso(context, model, MAIN_NAMESPACE + "validate" );
+
+        Resource precedencesClass = ResourceFactory.createProperty(MAIN_NAMESPACE + "Precedence");
+        result.precedencesSubclasses =
+                new SubclassRelationForType(context, model, org.apache.jena.vocabulary.RDF.type, precedencesClass);
+        Property isHigherProperty = ResourceFactory.createProperty(MAIN_NAMESPACE + "higherThan");
+        result.precedencesHigher =
+                new SubclassRelationForType(context, model, isHigherProperty, precedencesClass);
 
         return result;
     }
