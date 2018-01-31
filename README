@@ -1,3 +1,10 @@
+THIS PROJECT WAS DISCONTINUED because Java arrays are limited to 2^31 elements
+and I wish to support longer sequences of characters (such as big XML files).
+I decided to rewrite it in Python, see
+https://github.com/vporton/xml-boiler
+
+=====================================================================
+
 Automatically transform between XML namespaces.
 
 https://en.wikiversity.org/wiki/Automatic_transformation_of_XML_namespaces
