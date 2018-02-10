@@ -36,7 +36,7 @@ public class AsSet {
         HashMap<T, HashSet<T>> adj = new HashMap<>();
         for(T x : source) {
             Set<T> setA = a.adj.get(x);
-            Set<T> setB = a.adj.get(x);
+            Set<T> setB = b.adj.get(x);
             if(!setA.isEmpty() || !setB.isEmpty()) {
                 HashSet<T> set = new HashSet<>();
                 if(!setA.isEmpty()) set.addAll(setA);
