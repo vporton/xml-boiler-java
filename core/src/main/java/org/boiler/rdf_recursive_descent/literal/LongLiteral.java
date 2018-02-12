@@ -38,6 +38,7 @@ public class LongLiteral extends NodeParserWithError<Long> {
           org.apache.jena.rdf.model.Resource node)
             throws FatalParseError
     {
+        // FIXME: Is it correct XSD type?
         if(!node.isLiteral() || node.asLiteral().getDatatype() != org.apache.jena.vocabulary.XSD.xint) {
             org.boiler.util.StringCreator msg =
                 () -> java.text.MessageFormat.format(
@@ -46,6 +47,7 @@ public class LongLiteral extends NodeParserWithError<Long> {
             return context.raise(getErrorHandler(), msg);
 
         }
+        // FIXME: Conversion exceptions
         return new ParseResult<Long>(Long.parseLong(node.asLiteral().getString()));
     }
 
