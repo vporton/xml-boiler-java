@@ -1,3 +1,5 @@
+This project is superseded by https://github.com/vporton/xml-boiler-dlang
+
 THIS PROJECT WAS DISCONTINUED because Java arrays are limited to 2^31 elements
 and I wish to support longer sequences of characters (such as big XML files).
 I decided to rewrite it in Python, see
